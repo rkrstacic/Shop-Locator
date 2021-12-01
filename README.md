@@ -6,40 +6,50 @@ Projekt izradio [Rafael Krstačić](https://github.com/rkrstacic)
 u sklopu kolegija [Programsko inženjerstvo](https://ntankovic.unipu.hr/pi)
 na [Fakultetu informatike u Puli](https://fipu.unipu.hr/).
 
+Radi se o web aplikaciji kojoj je cilj olakšati korisnicima proces traženja odgovarajučih prodavaonica koje su u njihovoj blizini te zadovoljavaju njihove potrebe.    
+
 Projekt izrađen u [Vue.js](https://vuejs.org/)
 
 Mentor: doc. dr. sc. [Nikola Tanković](https://ntankovic.unipu.hr)
 
+<br />
 
 ## **Opis funkcionalnosti :scroll:**
 
-*Sklono promjenama*
+Definirane razine korisnika u svrhu opisa:
+- Korisnik razine 1 - Bez računa
+- Korisnik razine 2 - Sa besplatnim računom
+- Korisnik razine 3 - Sa plaćenim računom
 
-### Ključne funkcionalnosti
+Primarna značajka aplikacije je dohvaćanje popisa trenutno otvorenih prodavaonica unutar korisnički definiranog radiusa i lokacije.
 
-Glavna funkcionalnost aplikacije je dohvaćanje popisa otvorenih prodavaonica u blizini. Popis uključuje sve prodavaonice koje su unutar definiranog radiusa (sa strane korisnika) od izabrane lokacije
+Dolazak na aplikaciju je popraćen se dohvaćanjem željene lokacije, nakon čega se nudi popis kategorija prodavaonica na izbor te slijedi unos željenog radiusa koji je definiran kao ograničenje maksimalne udaljenosti prodavaonica na popisu i u konačnici se generira popis prodavaonica. 
 
-Mogućnost sortiranja prema:
-- Udaljenosti od korisnika
-- Ocjeni (sa aplikacije)
+- Dohvaćanje lokacije se izvađa:
+  1) Putem "locate me" buttona - Geolocation API
+  2) Putem tekstualnog polja - API (...treba api...)
+  
+- Kategorije služe kao glavni filter popisa prodavaonica. Popis kategorija je hardkodiran/Popis kategorija se izvlači sa API (...treba api...) (...moguce jedno ili drugo...). 
+  - Korisnik razine 1 može izabrati samo jednu od ponuđenih kategorija.
+  - Korisnik razine 2 može izabrati do 3 kategorije.
+  - Korisnik razine 3 može izabrati do 5 kategorija (...mozda 10...). 
 
-Mogućnost filtriranja prema:
-- Favoritu (ovisno o korisniku)
-- Vrsti maloprodajnih objekata
+- Maksimalna udaljenost - ograničenje na maksimalnu udaljenost prodavaonica sa popisa od izabrane lokacije.
+  - Korisnik razine 1 može izabrati do 250 metara udaljenosti.
+  - Korisnik razine 2 može izabrati do 1 kilometar udaljenosti.
+  - Korisnik razine 3 može izabrati do 5 kilometara udaljenosti.
 
-### Dopunske funkcionalnosti
 
-- *Mogućnost odabira lokacije korisnika putem GPS-a ili pretraživanja
-- *Mogućnost odabira željene maksimalne udaljenosti maloprodajnih objekata
-- Mogućnost pregleda maloprodajnih objekata i recenzije istih
-- Mogućnost ostavljanja vlastitih recenzija za maloprodajni objekt
-- Mogućnost označavanja nekog maloprodajnog objekta favoritom
+Popis je zadano sortiran prema udaljenosti od izabrane lokacije. Moguće ga je također sortirati prema broju favorita. Korisnici razine 2 i 3 mogu dodatno filtrirati popis prodavaonica po oznaci favorita, kako be se prikazale samo one prodavaonice za koje su oni označili favoritima.
 
-*Označeni sa \*: Potencijalna implementacija višestrukog odabira s obzirom na zahtjevnost ostalih funkcionalnosti*
+Favorit je korisnička oznaka dodijeljena za neku prodavaonicu. Svi korisnici mogu vidjeti broj oznaka favorita na pojedinoj prodavaonici, dok samo korisnici razine 2 i 3 imaju mogućnost dodijeljivanja oznake favorita nekoj prodavaonici. Broj oznaka favorita služi kao svojevrstan uvid popularnosti prodavaonice na aplikaciji.
+
+Za svaku se prodavaonicu mogu promatrati recenzije korisnika. Recenzije mogu vidjeti svi korisnici, no samo ih korisnici razine 2 i 3 mogu "ostaviti" (...mozda bolji nacin da se ovo kaze...). Svrha recenzija prodavaonica je stvaranje skupa povratnih informacija korisnika temeljem kojeg se može dobiti ideja o kvaliteti poslovanja prodavaonice u pitanju.
+
 
 ## **Ostalo**
 
-- [ ] Link na javni prototip (U izradi)
-- [ ] Napraviti lijepši README
+- [ ] Link na javni prototip (malo urediti)
+- [ ] Napraviti lijepši README i nadopuniti ga
 - [ ] Link na aplikaciju
-- [ ] Opisati funkcionalnosti
+- [ ] Prevesti na engleski (?)
