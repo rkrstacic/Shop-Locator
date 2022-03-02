@@ -6,9 +6,7 @@ Projekt izradio [Rafael Krstačić](https://github.com/rkrstacic)
 u sklopu kolegija [Programsko inženjerstvo](https://ntankovic.unipu.hr/pi)
 na [Fakultetu informatike u Puli](https://fipu.unipu.hr/).
 
-Radi se o web aplikaciji kojoj je cilj olakšati korisnicima proces traženja odgovarajučih prodavaonica koje su u njihovoj blizini te zadovoljavaju njihove potrebe.    
-
-Projekt izrađen u [Vue.js](https://vuejs.org/)
+Radi se o web aplikaciji kojoj je cilj olakšati korisnicima proces traženja odgovarajučih prodavaonica koje su u njihovoj blizini te zadovoljavaju njihove potrebe. [Prototip aplikacije](https://www.figma.com/proto/LjWwSORg8MISYlqTDHetpx/Store-locator?node-id=18%3A11259&starting-point-node-id=18%3A11259) je izrađen u alatu za dizajn sučelja, [Figma](https://www.figma.com/). Projekt izrađen u okviru [Vue.js](https://vuejs.org/)
 
 Mentor: doc. dr. sc. [Nikola Tanković](https://ntankovic.unipu.hr)
 
