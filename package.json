@@ -17,6 +17,7 @@
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
+    "lint": "^0.7.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2"
   }
