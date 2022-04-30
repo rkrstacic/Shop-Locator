@@ -65,6 +65,8 @@
 
 <script>
 import { createUserWithEmailAndPassword, getAuth } from "@/firebase";
+import router from "@/router";
+
 const auth = getAuth();
 
 export default {
@@ -84,6 +86,7 @@ export default {
                 this.email,
                 this.password
             );
+            router.replace({ name: "Home" }).catch((error) => {});
         },
     },
 };

@@ -1,5 +1,5 @@
 <template>
-    <v-container class="text-center">
+    <v-container class="text-center mt-10">
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Aclonica"
@@ -27,6 +27,7 @@
                             color="white--text"
                             elevation="2"
                             x-large
+                            @click="$emit('startShopEvent')"
                             >Let's start!</v-btn
                         >
                     </v-col>
@@ -92,7 +93,6 @@ div[data-app="true"] {
     font-weight: 700 !important;
     font-size: 20px !important;
     line-height: 52px;
-    display: flex;
     align-items: center;
     text-align: center;
 
@@ -105,5 +105,6 @@ div[data-app="true"] {
 <script>
 export default {
     name: "IntroScreen",
+    mounted() {},
 };
 </script>

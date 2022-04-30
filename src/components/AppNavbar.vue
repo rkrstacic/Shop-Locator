@@ -9,7 +9,7 @@
         <v-spacer></v-spacer>
 
         <v-toolbar-items class="hidden-sm-and-down">
-            <v-list-item v-for="link in links" :key="link">
+            <v-list-item v-for="link in links" :key="link.name">
                 <router-link class="nav-link m-2" :to="link.route">{{
                     link.name
                 }}</router-link>

@@ -52,6 +52,7 @@
 
 <script>
 import { getAuth, signInWithEmailAndPassword } from "@/firebase";
+import router from "@/router";
 
 export default {
     name: "login",
@@ -70,7 +71,7 @@ export default {
                     // Signed in
                     console.log("Prijava uspijesna");
                     const user = userCredential.user;
-                    // ...
+                    router.replace({ name: "Home" }).catch((error) => {});
                 })
                 .catch((error) => {
                     const errorCode = error.code;
