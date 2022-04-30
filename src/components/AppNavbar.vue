@@ -1,69 +1,107 @@
 <template>
-	<nav class="navbar navbar-expand-sm navbar-light app-navbar">
-		<div class="d-flex flex-grow-1">
-			<span class="w-100 d-xs-none d-block"><!-- hidden spacer to center brand on mobile --></span>
-			<a class="navbar-brand d-none d-inline-block" href="#">
-				<router-link class="nav-link menu-item" to="/">
-					<img src="" alt="Logo">
-				</router-link>
-			</a>
-			<div class="w-100 text-right">
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-			</div>
-		</div>
-		<div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
-			<ul class="navbar-nav ml-auto align-items-center flex-nowrap">
-				<li class="nav-item">
-					<router-link class="nav-link m-2 menu-item" to="/">Home</router-link>
-				</li>
-				<li class="nav-item">
-					<router-link class="nav-link m-2 menu-item" to="/pricing">Pricing</router-link>
-				</li>
-				<li class="nav-item">
-					<router-link class="nav-link m-2 menu-item" to="/about">About</router-link>
-				</li>
-				<li class="nav-item">
-					<router-link title="Account" class="nav-link menu-item profile-card" to="/login">
-						<img class="acc-pfp" src="@/assets/img/default_pfp.jpg" alt="Default profile picture">
-					</router-link>
-				</li>
-			</ul>
-		</div>
-	</nav>
-</template>
+    <v-toolbar class="app-navbar noselect" dark>
+        <v-toolbar-title
+            ><router-link class="nav-link m-2" to="/"
+                >Logo</router-link
+            ></v-toolbar-title
+        >
 
+        <v-spacer></v-spacer>
+
+        <v-toolbar-items class="hidden-sm-and-down">
+            <v-list-item v-for="link in links" :key="link">
+                <router-link class="nav-link m-2" :to="link.route">{{
+                    link.name
+                }}</router-link>
+            </v-list-item>
+
+            <v-list-item>
+                <router-link
+                    title="Account"
+                    class="nav-link profile-card"
+                    to="/login"
+                >
+                    <img
+                        class="acc-pfp"
+                        src="@/assets/img/default_pfp.jpg"
+                        alt="Default profile picture"
+                    />
+                </router-link>
+            </v-list-item>
+
+            <button v-if="isLogged" @click="signout()" class="text-warning">
+                Logout
+            </button>
+        </v-toolbar-items>
+    </v-toolbar>
+</template>
 
 <style scoped lang="scss">
 .app-navbar {
-    background-color: var(--tertiary-color);
-	
-	.nav-link:hover {
-		color: var(--quaternary-color);
-		opacity: 0.5;
-	}
+    background-color: var(--tertiary-color) !important;
 
-    .nav-link, .nav-link:visited {
+    .nav-link:hover {
+        color: var(--quaternary-color);
+        opacity: 0.5;
+    }
+
+    .nav-link,
+    .nav-link:visited {
         text-decoration: none;
         font-weight: bold;
         color: var(--quaternary-color);
     }
 
-	.profile-card {
-		height: 3.7em;
-	}
+    .profile-card {
+        height: 3.7em;
+    }
 
-	.acc-pfp {
-		max-width: 100%;
-		max-height: 100%;
-		border-radius: 50%;
-	}
+    .acc-pfp {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 50%;
+        padding: 0.3em;
+    }
 }
 </style>
 
 <script>
+import store from "@/store";
+import { getAuth, signOut } from "@/firebase";
+
 export default {
-    name: 'AppNavbar',
-}
+    name: "AppNavbar",
+
+    data() {
+        return {
+            store,
+            links: [
+                { route: "/", name: "Home" },
+                { route: "pricing", name: "Pricing" },
+                { route: "about", name: "About" },
+            ],
+        };
+    },
+    computed: {
+        isLogged() {
+            return this.store.currentUser !== null;
+        },
+    },
+    methods: {
+        async signout() {
+            if (!this.store.currentUser) {
+                return;
+            }
+
+            const auth = getAuth();
+            signOut(auth)
+                .then(() => {
+                    console.log("Signed out!");
+                })
+                .catch((error) => {
+                    console.error(`Error signing out! ${error}`);
+                });
+        },
+    },
+};
 </script>

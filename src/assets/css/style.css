@@ -1,6 +1,15 @@
 :root {
-	--primary-color: #66b539;
-	--secondary-color: #151b1f;
-	--tertiary-color: #374148;
-	--quaternary-color: #e8f7dd;
+    --primary-color: #66b539;
+    --secondary-color: #151b1f;
+    --tertiary-color: #374148;
+    --quaternary-color: #e8f7dd;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
