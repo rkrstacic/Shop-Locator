@@ -105,6 +105,5 @@ div[data-app="true"] {
 <script>
 export default {
     name: "IntroScreen",
-    mounted() {},
 };
 </script>

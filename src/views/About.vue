@@ -10,6 +10,7 @@
 </template>
 <script>
 import CardTest from "@/components/CardTest.vue";
+
 export default {
     components: { CardTest },
     name: "about",
