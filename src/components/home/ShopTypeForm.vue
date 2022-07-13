@@ -16,16 +16,18 @@
 				<v-col>
 					<v-row>
 						<v-col class="custom-font"
-							>First, we need Your location</v-col
+							>Select which types of shop you want to
+							search</v-col
 						>
 					</v-row>
 					<v-row class="pt-5 pb-5">
 						<v-col>
-							<v-text-field
-								v-model="location"
-								label="Location"
-								placeholder="e.g. Trafalgar Square, London"
-							></v-text-field>
+							<v-checkbox
+								v-for="shopType in Object.keys(shopTypes)"
+								:key="shopType"
+								:label="shopType"
+								v-model="shopTypes[shopType]"
+							></v-checkbox>
 						</v-col>
 					</v-row>
 					<v-row>
@@ -71,52 +73,11 @@ div[data-app="true"] {
 }
 
 .v-label {
-	color: gray !important;
-}
-
-.v-label--active {
 	color: var(--quaternary-color) !important;
 }
 
-.v-input__slot {
-	color: var(--quaternary-color) !important;
-}
-
-.v-text-field__slot {
-	color: var(--quaternary-color) !important;
-}
-
-.v-input__slot::before {
-	border-color: gray !important;
-	border-width: 1px !important;
-}
-
-input::placeholder {
-	/* Chrome, Firefox, Opera, Safari 10.1+ */
-	color: gray !important;
-	opacity: 1; /* Firefox */
-}
-
-input:-ms-input-placeholder {
-	/* Internet Explorer 10-11 */
-	color: gray !important;
-}
-
-input::-ms-input-placeholder {
-	/* Microsoft Edge */
-	color: gray !important;
-}
-
-input {
+.theme--light.v-icon {
 	color: var(--quaternary-color);
-}
-
-input:active {
-	caret-color: var(--quaternary-color);
-}
-
-.v-input input {
-	color: var(--quaternary-color) !important;
 }
 </style>
 
@@ -124,8 +85,12 @@ input:active {
 export default {
 	name: "IntroForm",
 	data() {
+		const shopTypeList = ["Bakery", "Sea food", "Random"];
+
 		return {
-			location: "",
+			shopTypes: shopTypeList.reduce((accumulator, value) => {
+				return { ...accumulator, [value]: false };
+			}, {}),
 		};
 	},
 };
