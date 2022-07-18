@@ -14,13 +14,6 @@
 	color: var(--quaternary-color) !important;
 }
 
-.custom-font {
-	font-family: "PT Sans Caption";
-	font-style: normal;
-	font-weight: 500;
-	font-size: 22px;
-}
-
 .next-btn {
 	font-size: 18px;
 }
@@ -52,7 +45,7 @@ export default {
 		},
 	},
 	beforeCreate() {
-		let skip = true;
+		let skip = false;
 		if (skip) {
 			return;
 		}

@@ -1,9 +1,16 @@
 <template>
 	<div class="shoplist">
-		<h1>Here is a list of shop that are near you:</h1>
+		<div class="box">
+			<h1 class="custom-font text-left">
+				Here is a list of shop that are near you:
+			</h1>
+			<h4 class="custom-font-2 text-left">Change settings</h4>
+			<div class="custom-font text-right">Sort By [Button]</div>
+		</div>
 
-		<div>
+		<div class="shopcard-container">
 			<ShopCard
+				@click.native="toShop(shop.id)"
 				v-for="shop in shopList"
 				:key="shop.id"
 				:model="shop"
@@ -11,6 +18,35 @@
 		</div>
 	</div>
 </template>
+
+<style>
+.shopcard-container {
+	background-color: var(--quaternary-color);
+	border: 3px solid var(--primary-color);
+	border-radius: 20px;
+	padding: 5px 15px;
+}
+
+.ShopCard:not(:last-child) {
+	border-bottom: 2px solid var(--primary-color);
+}
+
+.box {
+	height: 100px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+
+.box > * {
+	flex: 1 1 50px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+
+	/* border: 1px solid black; */
+}
+</style>
 
 <script>
 import router from "@/router";
@@ -54,7 +90,6 @@ function fetchShops() {
 export default {
 	name: "ShopList",
 	beforeCreate() {
-		alert("BeforeCreate");
 		// Shop preferences do not exist
 		if (store.shopPreferences === null) {
 			store.shopPreferences = getEmptySP();
@@ -76,6 +111,13 @@ export default {
 		return {
 			shopList,
 		};
+	},
+	methods: {
+		toShop(id) {
+			router
+				.push({ name: "Shop", params: { id: id } })
+				.catch((error) => {});
+		},
 	},
 	components: { ShopCard },
 };

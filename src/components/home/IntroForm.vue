@@ -37,15 +37,6 @@
 </template>
 
 <style>
-div[data-app="true"] {
-	background: url("/src/assets/img/Cars-on-highway.jpg") !important;
-
-	/* Center and scale the image nicely */
-	background-position: center !important;
-	background-repeat: no-repeat !important;
-	background-size: cover !important;
-}
-
 .v-label {
 	color: gray !important;
 }
@@ -108,6 +99,12 @@ export default {
 	},
 	methods: {
 		goNext() {
+			// Empty location check
+			if (this.location === "" || this.location === null) {
+				alert("Location cannot be empty");
+				return;
+			}
+
 			store.shopPreferences.location = this.location;
 			this.$emit("startShopEvent");
 		},

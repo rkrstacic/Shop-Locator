@@ -1,15 +1,41 @@
 :root {
-    --primary-color: #66b539;
-    --secondary-color: #151b1f;
-    --tertiary-color: #374148;
-    --quaternary-color: #e8f7dd;
+	--primary-color: #5bbb24;
+	--secondary-color: #151b1f;
+	--tertiary-color: #374148;
+	--quaternary-color: #e8f7dd;
 }
 
 .noselect {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+div[data-app="true"] {
+	background: url("/src/assets/img/Cars-on-highway.jpg") !important;
+
+	/* Center and scale the image nicely */
+	background-position: center !important;
+	background-repeat: no-repeat !important;
+	background-size: cover !important;
+}
+
+.custom-font {
+	font-family: "PT Sans Caption";
+	font-style: normal;
+	font-weight: 500;
+	font-size: 22px;
+	text-shadow: 0px 4px 6px rgb(173, 173, 173);
+	color: var(--secondary-color);
+}
+
+.custom-font-2 {
+	font-family: "PT Sans Caption";
+	font-style: normal;
+	font-weight: 500;
+	font-size: 15px;
+	text-shadow: 0px 2px 4px rgb(173, 173, 173);
+	color: var(--primary-color);
 }

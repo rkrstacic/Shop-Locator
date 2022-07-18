@@ -46,15 +46,6 @@
 </template>
 
 <style>
-div[data-app="true"] {
-	background: url("/src/assets/img/Cars-on-highway.jpg") !important;
-
-	/* Center and scale the image nicely */
-	background-position: center !important;
-	background-repeat: no-repeat !important;
-	background-size: cover !important;
-}
-
 .v-label {
 	color: var(--quaternary-color) !important;
 }
@@ -65,7 +56,6 @@ div[data-app="true"] {
 </style>
 
 <script>
-import router from "@/router";
 import store from "@/store";
 
 export default {

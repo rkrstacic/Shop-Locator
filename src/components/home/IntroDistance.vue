@@ -37,15 +37,6 @@
 </template>
 
 <style>
-div[data-app="true"] {
-	background: url("/src/assets/img/Cars-on-highway.jpg") !important;
-
-	/* Center and scale the image nicely */
-	background-position: center !important;
-	background-repeat: no-repeat !important;
-	background-size: cover !important;
-}
-
 .v-label {
 	color: var(--quaternary-color) !important;
 }
@@ -68,9 +59,14 @@ export default {
 	},
 	methods: {
 		submit() {
-			// If is not valid
-			if (false) {
-				alert("Not allowed");
+			// No distance check
+			if (this.distance === null || this.distance === 0) {
+				alert("Distance cannot be 0");
+				return;
+			}
+
+			if (isNaN(this.distance)) {
+				alert("Distance must be a number");
 				return;
 			}
 
