@@ -41,6 +41,11 @@ const routes = [
 		name: "ShopList",
 		component: () => import("../views/ShopList.vue"),
 	},
+	{
+		path: "/shop",
+		name: "Shop",
+		component: () => import("../views/Shop.vue"),
+	},
 ];
 
 const router = new VueRouter({
