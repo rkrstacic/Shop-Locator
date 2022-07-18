@@ -1,12 +1,5 @@
 <template>
 	<v-container class="text-center mt-10">
-		<link
-			rel="stylesheet"
-			href="https://fonts.googleapis.com/css?family=Aclonica"
-		/><link
-			rel="stylesheet"
-			href="https://fonts.googleapis.com/css?family=PT%20Sans%20Caption"
-		/>
 		<v-card
 			elevation="2"
 			max-width="400"
@@ -32,7 +25,7 @@
 						<v-col class="text-left"> </v-col>
 						<v-col
 							class="custom-font next-btn text-right cursor-pointer"
-							@click="$emit('startShopEvent')"
+							@click="goNext()"
 						>
 							Next >
 						</v-col>
@@ -51,23 +44,6 @@ div[data-app="true"] {
 	background-position: center !important;
 	background-repeat: no-repeat !important;
 	background-size: cover !important;
-}
-
-.v-card {
-	background-color: var(--tertiary-color) !important;
-	border-color: var(--tertiary-color) !important;
-	color: var(--quaternary-color) !important;
-}
-
-.custom-font {
-	font-family: "PT Sans Caption";
-	font-style: normal;
-	font-weight: 500;
-	font-size: 22px;
-}
-
-.next-btn {
-	font-size: 18px;
 }
 
 .v-label {
@@ -121,12 +97,20 @@ input:active {
 </style>
 
 <script>
+import store from "@/store";
+
 export default {
 	name: "IntroForm",
 	data() {
 		return {
-			location: "",
+			location: null,
 		};
+	},
+	methods: {
+		goNext() {
+			store.shopPreferences.location = this.location;
+			this.$emit("startShopEvent");
+		},
 	},
 };
 </script>

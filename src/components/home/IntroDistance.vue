@@ -1,12 +1,5 @@
 <template>
 	<v-container class="text-center mt-10">
-		<link
-			rel="stylesheet"
-			href="https://fonts.googleapis.com/css?family=Aclonica"
-		/><link
-			rel="stylesheet"
-			href="https://fonts.googleapis.com/css?family=PT%20Sans%20Caption"
-		/>
 		<v-card
 			elevation="2"
 			max-width="400"
@@ -16,28 +9,26 @@
 				<v-col>
 					<v-row>
 						<v-col class="custom-font"
-							>Select which types of shop you want to
-							search</v-col
+							>Enter maximum distance search</v-col
 						>
 					</v-row>
 					<v-row class="pt-5 pb-5">
 						<v-col>
-							<v-checkbox
-								v-for="shopType in Object.keys(shopTypes)"
-								:key="shopType"
-								:label="shopType"
-								v-model="shopTypes[shopType]"
-							></v-checkbox>
+							<v-text-field
+								v-model="distance"
+								label="Distance"
+								placeholder="e.g. 250m"
+							></v-text-field>
 						</v-col>
 					</v-row>
 					<v-row>
 						<v-col class="text-left"> </v-col>
-						<div
-							@click="goNext()"
+						<v-col
 							class="custom-font next-btn text-right cursor-pointer"
+							@click="submit()"
 						>
-							Next >
-						</div>
+							Submit
+						</v-col>
 					</v-row>
 				</v-col>
 			</v-row>
@@ -71,18 +62,20 @@ import store from "@/store";
 export default {
 	name: "ShopTypeForm",
 	data() {
-		const shopTypeList = ["Bakery", "Sea food", "Random"];
-
 		return {
-			shopTypes: shopTypeList.reduce((accumulator, value) => {
-				return { ...accumulator, [value]: false };
-			}, {}),
+			distance: null,
 		};
 	},
 	methods: {
-		goNext() {
-			store.shopPreferences.shopTypes = this.shopTypes;
-			this.$emit("startShopEvent");
+		submit() {
+			// If is not valid
+			if (false) {
+				alert("Not allowed");
+				return;
+			}
+
+			store.shopPreferences.distance = this.distance;
+			router.replace({ name: "ShopList" }).catch((error) => {});
 		},
 	},
 };
