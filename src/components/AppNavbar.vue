@@ -16,7 +16,7 @@
 				<router-link
 					@click.native="checkHome(link.name)"
 					class="nav-link m-2"
-					:to="link.route"
+					:to="link"
 					>{{ link.name }}</router-link
 				>
 			</v-list-item>
@@ -83,8 +83,8 @@ export default {
 			store,
 			links: [
 				{ route: "/", name: "Home" },
-				{ route: "pricing", name: "Pricing" },
-				{ route: "about", name: "About" },
+				{ route: "/pricing", name: "Pricing" },
+				{ route: "/about", name: "About" },
 			],
 		};
 	},
@@ -112,10 +112,12 @@ export default {
 		checkHome(linkName) {
 			// Check if home
 			if (linkName === "Home") {
-				store.homeStage = 1;
-				this.$router.go();
+				this.$emit("homeRestartEvent");
 			}
 		},
+	},
+	beforeRouteEnter(to, from) {
+		alert("Hello");
 	},
 };
 </script>

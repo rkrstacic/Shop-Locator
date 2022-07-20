@@ -1,25 +1,31 @@
 <template>
-	<div class="ShopCard p-3">
+	<div class="ShopCard p-3 text-left custom-font">
 		<link
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
 			rel="stylesheet"
 		/>
-		<div class="row">
-			<div class="col-10 text-left shop-name custom-font">
-				{{ model.name }}
-			</div>
-			<div class="col-2 text-left custom-font">
-				{{ model.closeTime }}
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-10 text-left custom-font">
-				{{ model.stars }}
-			</div>
-			<div class="col-2 text-left custom-font">
-				{{ model.distance }}
-			</div>
-		</div>
+
+		<v-row>
+			<v-col cols="12" md="10" sm="8">
+				<v-row>
+					<v-col class="shop-name">
+						{{ model.name }}
+					</v-col>
+				</v-row>
+				<v-row>
+					<v-col>{{ model.stars }}</v-col>
+				</v-row>
+			</v-col>
+
+			<v-col cols="12" md="2" sm="4">
+				<v-row>
+					<v-col>{{ model.closeTime }}</v-col>
+				</v-row>
+				<v-row>
+					<v-col>{{ model.distance }}</v-col>
+				</v-row>
+			</v-col>
+		</v-row>
 	</div>
 </template>
 

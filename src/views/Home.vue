@@ -7,7 +7,7 @@
 	</div>
 </template>
 
-<style>
+<style scoped>
 .v-card {
 	background-color: var(--tertiary-color) !important;
 	border-color: var(--tertiary-color) !important;
@@ -42,6 +42,10 @@ export default {
 	methods: {
 		nextStage() {
 			this.stage++;
+		},
+		homeRestartEvent() {
+			this.stage = store.homeStage;
+			store.homeStage = 1;
 		},
 	},
 	beforeCreate() {

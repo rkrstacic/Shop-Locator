@@ -1,11 +1,11 @@
 <template>
 	<div class="shoplist">
 		<div class="box">
-			<h1 class="custom-font text-left">
+			<h1 class="custom-font">
 				Here is a list of shop that are near you:
 			</h1>
-			<h4 class="custom-font-2 text-left">Change settings</h4>
-			<div class="custom-font text-right">Sort By [Button]</div>
+			<h4 class="custom-font-2 color-primary">Change settings</h4>
+			<div class="custom-font">Sort By [Button]</div>
 		</div>
 
 		<div class="shopcard-container">
@@ -19,16 +19,14 @@
 	</div>
 </template>
 
-<style>
+<style scoped>
 .shopcard-container {
 	background-color: var(--quaternary-color);
 	border: 3px solid var(--primary-color);
 	border-radius: 20px;
 	padding: 5px 15px;
-}
-
-.ShopCard:not(:last-child) {
-	border-bottom: 2px solid var(--primary-color);
+	width: 75%;
+	margin: auto;
 }
 
 .box {
@@ -36,6 +34,18 @@
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
+	width: 75%;
+	margin: auto;
+}
+
+@media only screen and (max-width: 1264px) {
+	.shopcard-container {
+		width: initial;
+	}
+
+	.box {
+		width: initial;
+	}
 }
 
 .box > * {
@@ -44,7 +54,31 @@
 	justify-content: center;
 	flex-direction: column;
 
-	/* border: 1px solid black; */
+	text-align: left;
+}
+
+.box > *:last-child {
+	text-align: right;
+}
+
+@media only screen and (max-width: 800px) {
+	.box {
+		height: auto;
+		margin-bottom: 10px;
+	}
+
+	.box > * {
+		flex: 1 1 0px;
+	}
+
+	.box > *:last-child {
+		margin-top: 10px;
+		text-align: left;
+	}
+}
+
+.ShopCard:not(:last-child) {
+	border-bottom: 2px solid var(--primary-color);
 }
 </style>
 

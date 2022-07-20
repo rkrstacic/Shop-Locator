@@ -1,34 +1,34 @@
 <template>
-    <v-app>
-        <header>
-            <AppNavbar />
-        </header>
-        <div class="container pt-3">
-            <router-view />
-        </div>
-    </v-app>
+	<v-app>
+		<header>
+			<AppNavbar />
+		</header>
+		<div class="p-3">
+			<router-view />
+		</div>
+	</v-app>
 </template>
 
 <style lang="scss">
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
+	font-family: Avenir, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: center;
+	color: #2c3e50;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 body::-webkit-scrollbar,
 html::-webkit-scrollbar {
-    display: none;
+	display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
 body,
 html {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
 }
 </style>
 
@@ -41,28 +41,28 @@ import router from "@/router";
 const auth = getAuth();
 
 onAuthStateChanged(auth, (user) => {
-    const currentRoute = router.currentRoute;
+	const currentRoute = router.currentRoute;
 
-    if (user) {
-        console.log(user.email);
-        store.currentUser = user.email;
+	if (user) {
+		console.log(user.email);
+		store.currentUser = user.email;
 
-        if (!currentRoute.meta.onlyNoUser) {
-            router.push({ name: "Home" }).catch((error) => {});
-        }
-    } else {
-        store.currentUser = null;
+		if (!currentRoute.meta.onlyNoUser) {
+			router.push({ name: "Home" }).catch((error) => {});
+		}
+	} else {
+		store.currentUser = null;
 
-        if (currentRoute.meta.needsUser) {
-            router.push({ name: "Login" }).catch((error) => {});
-        }
-    }
+		if (currentRoute.meta.needsUser) {
+			router.push({ name: "Login" }).catch((error) => {});
+		}
+	}
 });
 
 export default {
-    name: "App",
-    components: {
-        AppNavbar,
-    },
+	name: "App",
+	components: {
+		AppNavbar,
+	},
 };
 </script>

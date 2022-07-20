@@ -36,7 +36,7 @@
 	</v-container>
 </template>
 
-<style>
+<style scoped>
 .v-label {
 	color: gray !important;
 }

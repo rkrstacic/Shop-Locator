@@ -22,6 +22,7 @@ export default {
 	currentUser: null,
 	shopPreferences: getEmptySP(),
 	homeStage: 1,
+	shopID: 0,
 };
 
 export { getEmptySP, isAnyDefaultSP };

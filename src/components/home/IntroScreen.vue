@@ -30,7 +30,7 @@
 	</v-container>
 </template>
 
-<style>
+<style scoped>
 .shopfast {
 	font-family: "Aclonica";
 	font-style: normal;
