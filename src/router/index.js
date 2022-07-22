@@ -54,8 +54,7 @@ const router = new VueRouter({
 	routes,
 });
 
-router.beforeEach((to, from, next) => {
-	console.log(`route: ${from.name} -> ${to.name}`);
+router.beforeEach((to, _from, next) => {
 	const noUser = store.currentUser === null;
 
 	if (noUser && to.meta.needsUser) {

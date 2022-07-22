@@ -1,3 +1,5 @@
+const lsKey = "shop_preferences";
+
 // Getter function for shopPreferences object
 function getEmptySP() {
 	return {
@@ -25,4 +27,4 @@ export default {
 	shopID: 0,
 };
 
-export { getEmptySP, isAnyDefaultSP };
+export { getEmptySP, isAnyDefaultSP, lsKey };

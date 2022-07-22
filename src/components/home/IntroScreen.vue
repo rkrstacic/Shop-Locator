@@ -31,6 +31,16 @@
 </template>
 
 <style scoped>
+.v-card {
+	background-color: var(--tertiary-color) !important;
+	border-color: var(--tertiary-color) !important;
+	color: var(--quaternary-color) !important;
+}
+
+.next-btn {
+	font-size: 18px;
+}
+
 .shopfast {
 	font-family: "Aclonica";
 	font-style: normal;
@@ -63,7 +73,6 @@
 	align-items: center;
 	text-align: center;
 
-	/* Pallete/Tertiary */
 	color: var(--tertiary-color);
 
 	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

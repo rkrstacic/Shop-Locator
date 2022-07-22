@@ -36,7 +36,17 @@
 	</v-container>
 </template>
 
-<style>
+<style scoped>
+.v-card {
+	background-color: var(--tertiary-color) !important;
+	border-color: var(--tertiary-color) !important;
+	color: var(--quaternary-color) !important;
+}
+
+.next-btn {
+	font-size: 18px;
+}
+
 .v-label {
 	color: var(--quaternary-color) !important;
 }
@@ -47,7 +57,6 @@
 </style>
 
 <script>
-import router from "@/router";
 import store from "@/store";
 
 export default {
@@ -71,7 +80,7 @@ export default {
 			}
 
 			store.shopPreferences.distance = this.distance;
-			router.replace({ name: "ShopList" }).catch((error) => {});
+			this.$emit("startShopEvent");
 		},
 	},
 };

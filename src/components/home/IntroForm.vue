@@ -8,9 +8,9 @@
 			<v-row>
 				<v-col>
 					<v-row>
-						<v-col class="custom-font"
-							>First, we need Your location</v-col
-						>
+						<v-col class="custom-font">
+							First, we need Your location
+						</v-col>
 					</v-row>
 					<v-row class="pt-5 pb-5">
 						<v-col>
@@ -36,7 +36,17 @@
 	</v-container>
 </template>
 
-<style scoped>
+<style>
+.v-card {
+	background-color: var(--tertiary-color) !important;
+	border-color: var(--tertiary-color) !important;
+	color: var(--quaternary-color) !important;
+}
+
+.next-btn {
+	font-size: 18px;
+}
+
 .v-label {
 	color: gray !important;
 }

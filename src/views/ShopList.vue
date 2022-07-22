@@ -1,21 +1,56 @@
 <template>
 	<div class="shoplist">
-		<div class="box">
-			<h1 class="custom-font">
-				Here is a list of shop that are near you:
-			</h1>
-			<h4 class="custom-font-2 color-primary">Change settings</h4>
-			<div class="custom-font">Sort By [Button]</div>
-		</div>
+		<v-row class="text-left list-heading">
+			<v-col cols="12" md="10" sm="8">
+				<v-row class="custom-font">
+					<v-col>Here is a list of shop that are near you:</v-col>
+				</v-row>
+				<v-row class="custom-font-2 color-primary mt-0">
+					<v-col>Change settings</v-col>
+				</v-row>
+			</v-col>
+			<v-col cols="12" md="2" sm="4">
+				<v-row class="custom-font">
+					<v-col>Sort by</v-col>
+				</v-row>
+				<v-row class="mt-0">
+					<v-col>
+						<v-menu offset-y open-on-hover rounded="lg">
+							<template v-slot:activator="{ on, attrs }">
+								<v-btn v-bind="attrs" v-on="on">
+									{{ currentSort }}
+								</v-btn>
+							</template>
+							<v-list class="text-left">
+								<v-list-item @click="sortList('distance')">
+									<v-list-item-title>
+										Distance
+									</v-list-item-title>
+								</v-list-item>
+								<v-list-item @click="sortList('rating')">
+									<v-list-item-title>
+										Rating
+									</v-list-item-title>
+								</v-list-item>
+							</v-list>
+						</v-menu>
+					</v-col>
+				</v-row>
+			</v-col>
+		</v-row>
 
-		<div class="shopcard-container">
-			<ShopCard
-				@click.native="toShop(shop.id)"
-				v-for="shop in shopList"
-				:key="shop.id"
-				:model="shop"
-			></ShopCard>
-		</div>
+		<v-row>
+			<v-col>
+				<div class="shopcard-container">
+					<ShopCard
+						@click.native="toShop(shop.id)"
+						v-for="shop in shopList"
+						:key="shop.id"
+						:model="shop"
+					></ShopCard>
+				</div>
+			</v-col>
+		</v-row>
 	</div>
 </template>
 
@@ -29,13 +64,13 @@
 	margin: auto;
 }
 
-.box {
-	height: 100px;
-	display: flex;
-	flex-direction: column;
-	flex-wrap: wrap;
+.list-heading {
 	width: 75%;
 	margin: auto;
+}
+
+.shopcard-container > * {
+	cursor: pointer;
 }
 
 @media only screen and (max-width: 1264px) {
@@ -43,52 +78,37 @@
 		width: initial;
 	}
 
-	.box {
+	.list-heading {
 		width: initial;
-	}
-}
-
-.box > * {
-	flex: 1 1 50px;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-
-	text-align: left;
-}
-
-.box > *:last-child {
-	text-align: right;
-}
-
-@media only screen and (max-width: 800px) {
-	.box {
-		height: auto;
-		margin-bottom: 10px;
-	}
-
-	.box > * {
-		flex: 1 1 0px;
-	}
-
-	.box > *:last-child {
-		margin-top: 10px;
-		text-align: left;
 	}
 }
 
 .ShopCard:not(:last-child) {
 	border-bottom: 2px solid var(--primary-color);
 }
+
+.v-btn {
+	background-color: var(--quaternary-color) !important;
+	border: 1px solid var(--secondary-color);
+}
+
+.v-list {
+	background-color: var(--quaternary-color) !important;
+}
 </style>
 
 <script>
 import router from "@/router";
-import store, { getEmptySP, isAnyDefaultSP } from "@/store";
+import store, { getEmptySP, isAnyDefaultSP, lsKey } from "@/store";
 import ShopCard from "../components/shoplist/ShopCard.vue";
 
+const sortEnum = {
+	distance: "distance",
+	rating: "stars",
+};
+
 function fetchShops() {
-	// let preferences = store.shopPreferences);
+	// let preferences = store.shopPreferences;
 	return [
 		{
 			id: 1,
@@ -121,29 +141,64 @@ function fetchShops() {
 	];
 }
 
+function getDistance(rawDistance) {
+	let data = rawDistance.split(" ");
+	data[0] = parseFloat(data[0]);
+
+	if (data[1] === "km") {
+		data[0] *= 1000;
+	}
+
+	return data[0];
+}
+
+function getSortedList(shopList, attr) {
+	shopList.sort((f, s) => {
+		const sortKey = sortEnum[attr];
+
+		let first = f[sortKey];
+		let second = s[sortKey];
+
+		let sortLogic = false;
+		if (sortKey === "stars") {
+			sortLogic = parseInt(first) < parseInt(second);
+		}
+		if (sortKey === "distance") {
+			sortLogic = getDistance(first) > getDistance(second);
+		}
+
+		return sortLogic ? 1 : -1;
+	});
+
+	return shopList;
+}
+
 export default {
 	name: "ShopList",
 	beforeCreate() {
+		const preferences = localStorage.getItem(lsKey);
+
 		// Shop preferences do not exist
-		if (store.shopPreferences === null) {
+		if (preferences === null || preferences === undefined) {
 			store.shopPreferences = getEmptySP();
 			router.replace({ name: "Home" }).catch((error) => {});
-			alert("Something went wrong");
 			return;
 		}
+
 		// Shop preferences have any default value
-		if (isAnyDefaultSP(store.shopPreferences)) {
+		if (isAnyDefaultSP(preferences)) {
 			store.homeStage = 2;
 			router.replace({ name: "Home" }).catch((error) => {});
 			return;
 		}
 
-		console.log(store.shopPreferences);
+		console.log(preferences);
 	},
 	data() {
 		let shopList = fetchShops();
 		return {
 			shopList,
+			currentSort: "Distance",
 		};
 	},
 	methods: {
@@ -151,6 +206,9 @@ export default {
 			router
 				.push({ name: "Shop", params: { id: id } })
 				.catch((error) => {});
+		},
+		sortList(by) {
+			this.shopList = getSortedList(this.shopList, by);
 		},
 	},
 	components: { ShopCard },

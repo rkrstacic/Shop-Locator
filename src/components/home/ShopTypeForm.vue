@@ -45,7 +45,17 @@
 	</v-container>
 </template>
 
-<style scoped>
+<style>
+.v-card {
+	background-color: var(--tertiary-color) !important;
+	border-color: var(--tertiary-color) !important;
+	color: var(--quaternary-color) !important;
+}
+
+.next-btn {
+	font-size: 18px;
+}
+
 .v-label {
 	color: var(--quaternary-color) !important;
 }

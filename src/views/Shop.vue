@@ -29,6 +29,7 @@
 				<v-row
 					v-for="userComment in fetchComments"
 					:key="userComment.comment.id"
+					class="Comment"
 				>
 					<v-col>
 						<Comment :model="userComment"></Comment>
@@ -38,7 +39,12 @@
 		</v-row>
 
 		<v-row class="custom-font">
-			<v-col class="comment">Please log in to leave a comment!</v-col>
+			<v-col v-if="isLoggedUser" class="nocomment">
+				Please log in to leave a comment!
+			</v-col>
+			<v-col v-if="!isLoggedUser">
+				<WriteComment></WriteComment>
+			</v-col>
 		</v-row>
 	</div>
 </template>
@@ -58,7 +64,7 @@
 	font-size: 32px;
 }
 
-.comment {
+.nocomment {
 	font-size: 16px;
 	margin: 15px 0px;
 }
@@ -86,10 +92,23 @@
 .shop > *:nth-child(2) {
 	border-bottom: 2px solid var(--primary-color);
 }
+
+.Comment:not(:last-child) {
+	border-bottom: 1px solid gray;
+}
 </style>
 
 <script>
 import Comment from "@/components/shop/Comment.vue";
+import store from "@/store";
+import WriteComment from "@/components/shop/WriteComment.vue";
+
+let randomUser = {
+	id: 1,
+	name: "Slavko",
+	pfp: "url",
+};
+
 function fetchShop(id) {
 	return {
 		id: 1,
@@ -108,22 +127,23 @@ export default {
 		return {
 			shopID: this.$route.params.id,
 			shop,
+			isLoggedUser: store.currentUser === null,
 		};
 	},
-	components: { Comment },
+	components: { Comment, WriteComment },
 	computed: {
 		fetchComments(shopID) {
 			return [
 				{
-					user: {},
+					user: { ...randomUser },
 					comment: { id: 1, comment: "Hi" },
 				},
 				{
-					user: {},
+					user: { ...randomUser },
 					comment: { id: 2, comment: "Hello" },
 				},
 				{
-					user: {},
+					user: { ...randomUser },
 					comment: { id: 3, comment: ":)" },
 				},
 			];
