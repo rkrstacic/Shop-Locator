@@ -25,6 +25,7 @@ export default {
 	shopPreferences: getEmptySP(),
 	homeStage: 1,
 	shopID: 0,
+	resetPreference: false,
 };
 
 export { getEmptySP, isAnyDefaultSP, lsKey };

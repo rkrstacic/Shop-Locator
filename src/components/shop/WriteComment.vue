@@ -1,13 +1,28 @@
 <template>
 	<v-row class="text-left">
 		<v-col cols="3"> User </v-col>
-		<v-col cols="7" class="custom-font extension-font mt-2 mb-2">
-			<v-textarea solo auto-grow label="Your comment..."></v-textarea>
-		</v-col>
-		<v-col cols="2" class="mt-2 mb-2">
-			<v-btn width="auto" color="submit white--text" elevation="2">
-				Send
-			</v-btn>
+		<v-col cols="9" class="custom-font extension-font mt-2 mb-2">
+			<v-row>
+				<v-col>
+					<v-textarea
+						v-model="userComment"
+						solo
+						auto-grow
+						label="Your comment..."
+					></v-textarea>
+				</v-col>
+
+				<v-col cols="12" md="2">
+					<v-btn
+						@click="$emit('sendCommentEvent', userComment)"
+						width="auto"
+						color="submit white--text"
+						elevation="2"
+					>
+						Send
+					</v-btn>
+				</v-col>
+			</v-row>
 		</v-col>
 	</v-row>
 </template>
@@ -47,5 +62,10 @@ textarea {
 <script>
 export default {
 	name: "WriteComment",
+	data() {
+		return {
+			userComment: "",
+		};
+	},
 };
 </script>

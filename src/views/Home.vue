@@ -41,13 +41,14 @@ export default {
 		},
 	},
 	beforeCreate() {
-		// Test
-		store.currentUser = "1";
-
-		router
-			.replace({ name: "Shop", params: { id: 1 } })
-			.catch((error) => {});
+		router.replace({ name: "Pricing" }).catch((error) => {});
 		return;
+
+		// Skip check if resetPreference is set to "true"
+		if (store.resetPreference) {
+			store.resetPreference = false;
+			return;
+		}
 
 		const preferences = localStorage.getItem(lsKey);
 		if (preferences !== null && preferences !== undefined) {

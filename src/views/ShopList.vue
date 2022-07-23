@@ -6,7 +6,9 @@
 					<v-col>Here is a list of shop that are near you:</v-col>
 				</v-row>
 				<v-row class="custom-font-2 color-primary mt-0">
-					<v-col>Change settings</v-col>
+					<v-col @click="changeSettings()" class="cursor-pointer">
+						Change settings
+					</v-col>
 				</v-row>
 			</v-col>
 			<v-col cols="12" md="2" sm="4">
@@ -194,6 +196,9 @@ export default {
 
 		console.log(preferences);
 	},
+	created() {
+		this.sortList("distance");
+	},
 	data() {
 		let shopList = fetchShops();
 		return {
@@ -209,6 +214,11 @@ export default {
 		},
 		sortList(by) {
 			this.shopList = getSortedList(this.shopList, by);
+		},
+		changeSettings() {
+			store.resetPreference = true;
+			store.homeStage = 2;
+			router.replace({ name: "Home" }).catch((error) => {});
 		},
 	},
 	components: { ShopCard },

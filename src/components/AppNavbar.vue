@@ -11,7 +11,7 @@
 
 		<v-spacer></v-spacer>
 
-		<v-toolbar-items class="hidden-sm-and-down">
+		<v-toolbar-items class="hidden-xs-and-down">
 			<v-list-item v-for="link in links" :key="link.name">
 				<router-link
 					@click.native="checkHome(link.name)"

@@ -19,7 +19,7 @@
 					</v-col>
 				</v-row>
 			</v-col>
-			<v-col cols="2" class="text-right pr-10">
+			<v-col cols="2" @click="fav()" class="text-right pr-10">
 				{{ shop.stars }}
 			</v-col>
 		</v-row>
@@ -43,7 +43,7 @@
 				Please log in to leave a comment!
 			</v-col>
 			<v-col v-if="!isLoggedUser">
-				<WriteComment></WriteComment>
+				<WriteComment @sendCommentEvent="sendComment"></WriteComment>
 			</v-col>
 		</v-row>
 	</div>
@@ -129,6 +129,24 @@ export default {
 			shop,
 			isLoggedUser: store.currentUser === null,
 		};
+	},
+	methods: {
+		sendComment(comment) {
+			if (comment === null || comment === "") {
+				alert("Comment cannot be empty");
+				return;
+			}
+
+			// Send comment
+		},
+		fav() {
+			if (!this.isLoggedUser) {
+				alert("You must be logged in to give this shop a star");
+				return;
+			}
+
+			// Mark as fav
+		},
 	},
 	components: { Comment, WriteComment },
 	computed: {
