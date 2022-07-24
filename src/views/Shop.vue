@@ -19,31 +19,31 @@
 					</v-col>
 				</v-row>
 			</v-col>
-			<v-col cols="2" @click="fav()" class="text-right pr-10">
-				{{ shop.stars }}
+			<v-col cols="2" @click="toggleFavAsync()" class="text-right pr-10">
+				{{ shop.stars }} {{ favID }}
 			</v-col>
 		</v-row>
 
 		<v-row>
 			<v-col>
 				<v-row
-					v-for="userComment in fetchComments"
-					:key="userComment.comment.id"
+					v-for="comment in comments"
+					:key="comment.comment.id"
 					class="Comment"
 				>
 					<v-col>
-						<Comment :model="userComment"></Comment>
+						<Comment :model="comment"></Comment>
 					</v-col>
 				</v-row>
 			</v-col>
 		</v-row>
 
 		<v-row class="custom-font">
-			<v-col v-if="isLoggedUser" class="nocomment">
+			<v-col v-if="!isLoggedUser" class="nocomment">
 				Please log in to leave a comment!
 			</v-col>
-			<v-col v-if="!isLoggedUser">
-				<WriteComment @sendCommentEvent="sendComment"></WriteComment>
+			<v-col v-if="isLoggedUser">
+				<WriteComment></WriteComment>
 			</v-col>
 		</v-row>
 	</div>
@@ -100,7 +100,19 @@
 
 <script>
 import Comment from "@/components/shop/Comment.vue";
+import {
+	db,
+	collection,
+	query,
+	where,
+	getDocs,
+	addDoc,
+	orderBy,
+	deleteDoc,
+	doc,
+} from "@/firebase";
 import store from "@/store";
+import router from "@/router";
 import WriteComment from "@/components/shop/WriteComment.vue";
 
 let randomUser = {
@@ -108,6 +120,10 @@ let randomUser = {
 	name: "Slavko",
 	pfp: "url",
 };
+
+function makeFavObj({ shop_id, user }) {
+	return { shop_id, user };
+}
 
 function fetchShop(id) {
 	return {
@@ -119,53 +135,139 @@ function fetchShop(id) {
 	};
 }
 
+async function fetchCommentsSnapshotAsync(shopID) {
+	// Get comments collection
+	const commentsRef = collection(db, "comments");
+
+	// Create a query against the collection.
+	const q = query(
+		commentsRef,
+		where("shop_id", "==", shopID),
+		orderBy("date_sent")
+	);
+
+	// Return a snapshot with the query
+	return await getDocs(q);
+}
+
+async function fetchFavSnapshotAsync({ shop_id, user }) {
+	// Get favourites collection
+	const favouritesRef = collection(db, "favourites");
+
+	// Create a query against the collection.
+	const q = query(
+		favouritesRef,
+		where("shop_id", "==", shop_id),
+		where("user", "==", user)
+	);
+
+	// Return a snapshot with the query
+	return await getDocs(q);
+}
+
+async function fetchShopFavSnapshotAsync(shop_id) {
+	// Get favourites collection
+	const favouritesRef = collection(db, "favourites");
+
+	// Create a query against the collection.
+	const q = query(favouritesRef, where("shop_id", "==", shop_id));
+
+	// Return a snapshot with the query
+	return await getDocs(q);
+}
+
 export default {
 	name: "Shop",
 	data() {
+		store.currentUser = "RandomUser";
 		// Fetch a shop
 		let shop = fetchShop(this.$route.params.id);
 		return {
 			shopID: this.$route.params.id,
 			shop,
-			isLoggedUser: store.currentUser === null,
+			isLoggedUser: store.currentUser !== null,
+			comments: [],
+			currentUser: store.currentUser,
+			favID: "",
 		};
 	},
+	mounted() {
+		this.fetchCommentsAsync();
+		this.fetchFavAsync();
+		this.fetchShopFavAsync();
+	},
 	methods: {
-		sendComment(comment) {
-			if (comment === null || comment === "") {
-				alert("Comment cannot be empty");
-				return;
-			}
-
-			// Send comment
-		},
-		fav() {
+		async toggleFavAsync() {
+			// Only logged users can mark as fav
 			if (!this.isLoggedUser) {
 				alert("You must be logged in to give this shop a star");
 				return;
 			}
 
-			// Mark as fav
+			// Not previously marked as fav
+			if (!this.favID) {
+				await this.addToFavAsync();
+			}
+
+			// Previously marked as fav
+			else {
+				await this.removeFromFavAsync();
+			}
+		},
+		async removeFromFavAsync() {
+			try {
+				await deleteDoc(doc(db, "favourites", this.favID));
+				router.go();
+			} catch (e) {
+				console.error("Error deleting document: ", e);
+			}
+		},
+		async addToFavAsync() {
+			const favourite = makeFavObj({
+				shop_id: this.shopID,
+				user: this.currentUser,
+			});
+
+			try {
+				await addDoc(collection(db, "favourites"), favourite);
+				router.go();
+			} catch (e) {
+				console.error("Error adding document: ", e);
+			}
+		},
+		async fetchCommentsAsync() {
+			await fetchCommentsSnapshotAsync(this.shopID).then(
+				(querySnapshot) => {
+					querySnapshot.forEach((doc) => {
+						this.comments.push({
+							user: { ...randomUser },
+							comment: doc.data(),
+						});
+					});
+				}
+			);
+		},
+		async fetchFavAsync() {
+			await fetchFavSnapshotAsync({
+				shop_id: this.shopID,
+				user: store.currentUser,
+			}).then((querySnapshot) => {
+				querySnapshot.forEach((doc) => {
+					this.favID = doc.id;
+				});
+			});
+		},
+		async fetchShopFavAsync() {
+			await fetchShopFavSnapshotAsync(this.shopID).then(
+				(querySnapshot) => {
+					querySnapshot.forEach(() => {
+						this.shop.stars++;
+					});
+				}
+			);
 		},
 	},
 	components: { Comment, WriteComment },
-	computed: {
-		fetchComments(shopID) {
-			return [
-				{
-					user: { ...randomUser },
-					comment: { id: 1, comment: "Hi" },
-				},
-				{
-					user: { ...randomUser },
-					comment: { id: 2, comment: "Hello" },
-				},
-				{
-					user: { ...randomUser },
-					comment: { id: 3, comment: ":)" },
-				},
-			];
-		},
-	},
+	computed: {},
 };
 </script>

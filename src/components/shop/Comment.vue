@@ -4,7 +4,7 @@
 			{{ model.user }}
 		</v-col>
 		<v-col cols="9" class="custom-font extension-font mt-2 mb-2">
-			{{ model.comment.comment }}
+			{{ model.comment.message }}
 		</v-col>
 	</v-row>
 </template>
