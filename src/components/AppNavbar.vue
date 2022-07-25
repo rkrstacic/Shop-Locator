@@ -22,19 +22,18 @@
 			</v-list-item>
 
 			<v-list-item>
-				<router-link
+				<div
 					title="Account"
 					class="nav-link profile-card"
-					to="/login"
+					@click="account()"
 				>
 					<img
 						class="acc-pfp"
 						src="@/assets/img/default_pfp.jpg"
 						alt="Default profile picture"
 					/>
-				</router-link>
+				</div>
 			</v-list-item>
-
 			<button v-if="isLogged" @click="signout()" class="text-warning">
 				Logout
 			</button>
@@ -74,6 +73,7 @@
 <script>
 import store from "@/store";
 import { getAuth, signOut } from "@/firebase";
+import router from "@/router";
 
 export default {
 	name: "AppNavbar",
@@ -115,9 +115,14 @@ export default {
 				this.$emit("homeRestartEvent");
 			}
 		},
-	},
-	beforeRouteEnter(to, from) {
-		alert("Hello");
+
+		account() {
+			if (this.store.currentUser) {
+				router.push({ name: "Account" }).catch((error) => {});
+			} else {
+				router.push({ name: "Login" }).catch((error) => {});
+			}
+		},
 	},
 };
 </script>

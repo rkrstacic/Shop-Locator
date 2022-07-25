@@ -39,21 +39,22 @@ import { getAuth, onAuthStateChanged } from "@/firebase";
 import router from "@/router";
 
 const auth = getAuth();
+store.authFired = false;
 
 onAuthStateChanged(auth, (user) => {
 	const currentRoute = router.currentRoute;
+	store.authFired = true;
 
 	if (user) {
-		console.log(user.email);
 		store.currentUser = user.email;
 
-		if (!currentRoute.meta.onlyNoUser) {
+		if (currentRoute.meta.onlyNoUser === true) {
 			router.push({ name: "Home" }).catch((error) => {});
 		}
 	} else {
 		store.currentUser = null;
 
-		if (currentRoute.meta.needsUser) {
+		if (currentRoute.meta.needsUser === true) {
 			router.push({ name: "Login" }).catch((error) => {});
 		}
 	}

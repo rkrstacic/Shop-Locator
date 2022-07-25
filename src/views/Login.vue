@@ -1,53 +1,103 @@
 <template>
 	<div class="login">
-		<h1 class="text-center">Login</h1>
-		<div class="container mt-5">
-			<div class="row">
-				<div class="col-sm-2 col-md-3 col-lg-4"></div>
-				<div class="col-sm-8 col-md-6 col-lg-4">
-					<div>
-						<div class="form-group">
-							<label for="exampleInputEmail1">
-								Email address
-							</label>
-							<input
-								v-model="email"
-								type="email"
-								class="form-control"
-								id="exampleInputEmail1"
-								aria-describedby="emailHelp"
-								placeholder="Enter email"
-							/>
-							<small id="emailHelp" class="form-text text-muted">
-								We'll never share your email with anyone else.
-							</small>
-						</div>
-						<div class="form-group">
-							<label for="exampleInputPassword1">Password</label>
-							<input
-								v-model="password"
-								type="password"
-								class="form-control"
-								id="exampleInputPassword1"
-								placeholder="Password"
-							/>
-						</div>
-						<div class="mt-5">
-							<button
-								@click="login()"
-								class="btn btn-primary mr-3"
+		<v-container fluid fill-height>
+			<v-layout align-center justify-center>
+				<v-flex xs12 sm8 md4>
+					<v-card>
+						<v-toolbar flat color="primary" class="custom-font">
+							<v-toolbar-title>Login</v-toolbar-title>
+						</v-toolbar>
+						<v-card-text>
+							<v-form>
+								<v-text-field
+									v-model="email"
+									label="Email address"
+									type="text"
+								></v-text-field>
+								<v-text-field
+									v-model="password"
+									label="Password"
+									type="password"
+								></v-text-field>
+							</v-form>
+						</v-card-text>
+						<v-card-actions>
+							<v-spacer></v-spacer>
+							<v-btn class="custom-font" @click="login()"
+								>Login</v-btn
 							>
-								Log in
-							</button>
-							<router-link to="/register">Register</router-link>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-2 col-md-3 col-lg-4"></div>
-			</div>
-		</div>
+							<v-btn class="custom-font" @click="toRegister()"
+								>Register</v-btn
+							>
+						</v-card-actions>
+					</v-card>
+				</v-flex>
+			</v-layout>
+		</v-container>
 	</div>
 </template>
+
+<style>
+.v-card,
+.v-toolbar {
+	background-color: var(--tertiary-color) !important;
+	border-color: var(--tertiary-color) !important;
+	color: var(--quaternary-color) !important;
+}
+
+.v-btn {
+	background-color: var(--primary-color) !important;
+}
+
+.v-label {
+	color: gray !important;
+}
+
+.v-label--active {
+	color: var(--quaternary-color) !important;
+}
+
+.v-input__slot {
+	color: var(--quaternary-color) !important;
+}
+
+.v-text-field__slot {
+	color: var(--quaternary-color) !important;
+}
+
+.v-input__slot::before {
+	border-color: gray !important;
+	border-width: 1px !important;
+}
+
+input::placeholder {
+	/* Chrome, Firefox, Opera, Safari 10.1+ */
+	color: gray !important;
+	opacity: 1; /* Firefox */
+}
+
+input:-ms-input-placeholder {
+	/* Internet Explorer 10-11 */
+	color: gray !important;
+}
+
+input::-ms-input-placeholder {
+	/* Microsoft Edge */
+	color: gray !important;
+}
+
+input {
+	color: var(--quaternary-color) !important;
+}
+
+input:active {
+	caret-color: var(--quaternary-color) !important;
+}
+
+.v-input input {
+	color: var(--quaternary-color) !important;
+}
+</style>
 
 <script>
 import { getAuth, signInWithEmailAndPassword } from "@/firebase";
@@ -68,7 +118,6 @@ export default {
 			signInWithEmailAndPassword(auth, this.email, this.password)
 				.then((userCredential) => {
 					// Signed in
-					console.log("Prijava uspijesna");
 					const user = userCredential.user;
 					router.replace({ name: "Home" }).catch((error) => {});
 				})
@@ -76,9 +125,12 @@ export default {
 					const errorCode = error.code;
 					const errorMessage = error.message;
 					console.log(
-						`Prijava neuspijesna; errorCode: ${errorCode}; errorMessage: ${errorMessage}`
+						`Login failed; errorCode: ${errorCode}; errorMessage: ${errorMessage}`
 					);
 				});
+		},
+		toRegister() {
+			router.push({ name: "Register" }).catch((error) => {});
 		},
 	},
 };

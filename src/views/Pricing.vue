@@ -9,8 +9,5 @@ import callAjax from "@/ajaxBearerKey.js";
 
 export default {
 	name: "pricing",
-	created() {
-		callAjax();
-	},
 };
 </script>

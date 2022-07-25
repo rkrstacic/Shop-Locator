@@ -193,8 +193,6 @@ export default {
 			router.replace({ name: "Home" }).catch((error) => {});
 			return;
 		}
-
-		console.log(preferences);
 	},
 	created() {
 		this.sortList("distance");
@@ -218,7 +216,7 @@ export default {
 		changeSettings() {
 			store.resetPreference = true;
 			store.homeStage = 2;
-			router.replace({ name: "Home" }).catch((error) => {});
+			router.push({ name: "Home" }).catch((error) => {});
 		},
 	},
 	components: { ShopCard },

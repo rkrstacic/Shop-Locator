@@ -50,6 +50,7 @@ export default {
 		const preferences = localStorage.getItem(lsKey);
 		if (preferences !== null && preferences !== undefined) {
 			router.replace({ name: "ShopList" }).catch((error) => {});
+			return;
 		}
 	},
 };
