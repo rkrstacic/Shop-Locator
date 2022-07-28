@@ -12,7 +12,10 @@ import {
 	orderBy,
 	deleteDoc,
 	doc,
+	setDoc,
 } from "firebase/firestore";
+
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {
 	getAuth,
 	createUserWithEmailAndPassword,
@@ -40,6 +43,11 @@ export {
 	firebase,
 	db,
 	doc,
+	getStorage,
+	getDownloadURL,
+	ref,
+	uploadBytes,
+	setDoc,
 	collection,
 	orderBy,
 	addDoc,

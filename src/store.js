@@ -22,6 +22,7 @@ function isAnyDefaultSP(sp) {
 
 export default {
 	currentUser: null,
+	userProfileURL: "",
 	authFired: false,
 	shopPreferences: getEmptySP(),
 	homeStage: 1,

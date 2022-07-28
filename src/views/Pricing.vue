@@ -5,9 +5,12 @@
 </template>
 
 <script>
-import callAjax from "@/ajaxBearerKey.js";
+import callAjax from "@/ajaxBearerKey copy";
 
 export default {
 	name: "pricing",
+	created() {
+		// callAjax();
+	},
 };
 </script>

@@ -23,12 +23,12 @@
 						</v-card-text>
 						<v-card-actions>
 							<v-spacer></v-spacer>
-							<v-btn class="custom-font" @click="login()"
-								>Login</v-btn
-							>
-							<v-btn class="custom-font" @click="toRegister()"
-								>Register</v-btn
-							>
+							<v-btn class="custom-font" @click="login()">
+								Login
+							</v-btn>
+							<v-btn class="custom-font" @click="toRegister()">
+								Register
+							</v-btn>
 						</v-card-actions>
 					</v-card>
 				</v-flex>
@@ -127,6 +127,11 @@ export default {
 					console.log(
 						`Login failed; errorCode: ${errorCode}; errorMessage: ${errorMessage}`
 					);
+					if (errorCode === "auth/user-not-found") {
+						alert("Invalid crdentials");
+					} else {
+						alert("Login failed");
+					}
 				});
 		},
 		toRegister() {

@@ -109,8 +109,24 @@ input:active {
 <script>
 import { createUserWithEmailAndPassword, getAuth } from "@/firebase";
 import router from "@/router";
+import { db, collection, addDoc } from "@/firebase";
 
 const auth = getAuth();
+
+function makeUserObj({ username, email, pfp_id }) {
+	return { username, email, pfp_id };
+}
+
+async function addUserToCollections({ username, email, pfp_id }) {
+	const userObj = makeUserObj({ username, email, pfp_id });
+
+	try {
+		await addDoc(collection(db, "users"), userObj);
+	} catch (e) {
+		console.error("Error adding document: ", e);
+		alert("Register failed");
+	}
+}
 
 export default {
 	name: "Register",
@@ -124,11 +140,22 @@ export default {
 	},
 	methods: {
 		async signup() {
+			// Firebase auth
 			await createUserWithEmailAndPassword(
 				auth,
 				this.email,
 				this.password
 			);
+
+			// Two users with same username cannot exist
+
+			// Firebase users colleciton
+			await addUserToCollections({
+				username: this.username,
+				email: this.email,
+				pfp_id: 0,
+			});
+
 			router.replace({ name: "Home" }).catch((error) => {});
 		},
 	},

@@ -35,11 +35,32 @@ html {
 <script>
 import AppNavbar from "@/components/AppNavbar.vue";
 import store from "@/store";
-import { getAuth, onAuthStateChanged } from "@/firebase";
+import {
+	getAuth,
+	onAuthStateChanged,
+	getStorage,
+	getDownloadURL,
+	ref,
+} from "@/firebase";
 import router from "@/router";
 
 const auth = getAuth();
 store.authFired = false;
+
+function setImg(fileName) {
+	const storage = getStorage();
+	getDownloadURL(ref(storage, fileName))
+		.then((url) => {
+			const imgs = document.getElementsByClassName("acc-pfp");
+			store.userProfileURL = url;
+			Array.from(imgs).forEach((img) => {
+				img.setAttribute("src", url);
+			});
+		})
+		.catch((error) => {
+			console.log("Error", error);
+		});
+}
 
 onAuthStateChanged(auth, (user) => {
 	const currentRoute = router.currentRoute;
@@ -47,6 +68,7 @@ onAuthStateChanged(auth, (user) => {
 
 	if (user) {
 		store.currentUser = user.email;
+		setImg(store.currentUser);
 
 		if (currentRoute.meta.onlyNoUser === true) {
 			router.push({ name: "Home" }).catch((error) => {});

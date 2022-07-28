@@ -34,9 +34,6 @@
 					/>
 				</div>
 			</v-list-item>
-			<button v-if="isLogged" @click="signout()" class="text-warning">
-				Logout
-			</button>
 		</v-toolbar-items>
 	</v-toolbar>
 </template>
@@ -72,8 +69,6 @@
 
 <script>
 import store from "@/store";
-import { getAuth, signOut } from "@/firebase";
-import router from "@/router";
 
 export default {
 	name: "AppNavbar",
@@ -94,21 +89,6 @@ export default {
 		},
 	},
 	methods: {
-		async signout() {
-			if (!this.store.currentUser) {
-				return;
-			}
-
-			const auth = getAuth();
-			signOut(auth)
-				.then(() => {
-					console.log("Signed out!");
-				})
-				.catch((error) => {
-					console.error(`Error signing out! ${error}`);
-				});
-		},
-
 		checkHome(linkName) {
 			// Check if home
 			if (linkName === "Home") {
