@@ -1,6 +1,8 @@
 import JQuery from "jquery";
 window.$ = JQuery;
 
+const OAuth = require("oauth-1.0a");
+
 let keyID = "la4fnVQ94m2GHHRQ-dDGjA";
 let keySecret =
 	"DZCczkYNdO-6Q7P5vVAjkR3OlVHYesGNe8K5VLpZrrpkaWhocSTGpOUP0abW67VOiRdELoC1l-QAmvAqwEE6dA";
@@ -47,6 +49,17 @@ function generateSignature() {
 
 	return hashInBase64;
 }
+
+const oauth = OAuth({
+	consumer: { key: keyID, secret: keySecret },
+	signature_method: "HMAC-SHA1",
+	hash_function(base_string, key) {
+		return crypto
+			.createHmac("sha1", key)
+			.update(base_string)
+			.digest("base64");
+	},
+});
 
 function callAjax() {
 	$.ajax({
