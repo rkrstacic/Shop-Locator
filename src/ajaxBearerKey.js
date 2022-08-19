@@ -5,6 +5,9 @@ let keyID = "la4fnVQ94m2GHHRQ-dDGjA";
 let keySecret =
 	"DZCczkYNdO-6Q7P5vVAjkR3OlVHYesGNe8K5VLpZrrpkaWhocSTGpOUP0abW67VOiRdELoC1l-QAmvAqwEE6dA";
 
+let accessKey =
+	"eyJhbGciOiJSUzUxMiIsImN0eSI6IkpXVCIsImlzcyI6IkhFUkUiLCJhaWQiOiJ2QzcxMkI3Q0l1c2JGemdvdHY4UiIsImlhdCI6MTY2MDkzMjQyOCwiZXhwIjoxNjYxMDE4ODI4LCJraWQiOiJqMSJ9.ZXlKaGJHY2lPaUprYVhJaUxDSmxibU1pT2lKQk1qVTJRMEpETFVoVE5URXlJbjAuLmNhY01PcDlvY25PM0liYnNnMWZ4dHcuNEM0d3J5Zk1EU3NHRFI5cUxQOUdmMlRXSVZYRFRGQXllNnAweXBlbGtpWXNUVEx5bUJJTnhwWGxpUjFpNzFNVHhzZncxVGYwUXZDWkI2ZkFubjNmOGYtcW1fQTJTS00yVG5ENktBQlU1SmM0VWRqRmlDUVVoUUNhUW5EbEE1d1pjNjdMSVJrYlFyRU9yOU4xTTlxbUhRLjQ3aEc3WndtNjczUkNJUHlRM2VSUTUyZ3VIUUg3aTlYanEwUEExUUg2X2c.hEe7JrMOrBK6_nVePCrBdi39YxnLtm-rREh2iS-s9KZiO0cPbuhOypEc8LerhjqG5SU9dGlXUCf7fe-43cPpV982gjJz5pJD3uyU8d-c0zT7D3ii_daRnyfvtkUl5SlgE5VvGFNyTmudCDdtMmxglsSVFhYjFyXxnF2hGSFPIe0Joe30ldD6Bh6nGKQYa9vKN2UCDuAGZX7Ku-1HdiFrFdh_O_5ZJIDG0FNJr4NSlJrrZ2SswaOA0fkKQ52dyZWGdh__DGsnH5t_FuUvR6WizVzs4XKgVEOjicLJggMKiUQp0qtVI1NYZWKW1SmHcv0xH9wEie2cQxQsFy89v-3OxA";
+
 const epoch = Date.now();
 
 const parameters = {
@@ -76,10 +79,11 @@ function callAjax() {
 
 // Example POST method implementation:
 async function postData(url = "") {
+	console.log("Hello");
 	const response = await fetch(url, {
 		method: "POST",
 		headers: {
-			"Content-Type": "application/x-www-form-urlencoded",
+			"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
 			Authorization: "OAuth",
 			...parameters,
 			oauth_signature: generateSignature(),

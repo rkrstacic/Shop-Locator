@@ -7,15 +7,15 @@
 			<v-col cols="8">
 				<v-row>
 					<v-col class="shop-name text-center">
-						{{ shop.name }}
+						{{ shop.title }}
 					</v-col>
 				</v-row>
 				<v-row>
 					<v-col cols="6" class="text-right">
-						{{ shop.closeTime }}
+						{{ closingHour }}
 					</v-col>
 					<v-col cols="6" class="text-left">
-						{{ shop.distance }}
+						{{ distanceToStr(shop.distance) }}
 					</v-col>
 				</v-row>
 			</v-col>
@@ -25,7 +25,7 @@
 		</v-row>
 
 		<v-row>
-			<v-col>
+			<v-col v-if="comments.length">
 				<v-row
 					v-for="comment in comments"
 					:key="comment.comment.id"
@@ -34,6 +34,11 @@
 					<v-col>
 						<Comment :model="comment"></Comment>
 					</v-col>
+				</v-row>
+			</v-col>
+			<v-col v-if="!comments.length">
+				<v-row>
+					<v-col> There are no reviews </v-col>
 				</v-row>
 			</v-col>
 		</v-row>
@@ -114,6 +119,7 @@ import {
 import store from "@/store";
 import router from "@/router";
 import WriteComment from "@/components/shop/WriteComment.vue";
+import data from "@/sampleData";
 
 let randomUser = {
 	id: 1,
@@ -126,13 +132,7 @@ function makeFavObj({ shop_id, user }) {
 }
 
 function fetchShop(id) {
-	return {
-		id: 1,
-		name: "Test Shop Name 1",
-		closeTime: "00:00pm",
-		stars: 999,
-		distance: "100 m",
-	};
+	return data["items"].filter((item) => item.id == id)[0];
 }
 
 async function fetchCommentsSnapshotAsync(shopID) {
@@ -266,8 +266,33 @@ export default {
 				}
 			);
 		},
+		distanceToStr(integer) {
+			if (integer < 1000) {
+				return `${integer} m`;
+			}
+
+			return `${Math.round(integer / 100) / 10} km`;
+		},
 	},
 	components: { Comment, WriteComment },
-	computed: {},
+	computed: {
+		closingHour() {
+			let openingHours = this.shop.openingHours;
+
+			if (openingHours === undefined) {
+				return "No info";
+			}
+
+			if (!Array.isArray(openingHours)) {
+				return "No info";
+			}
+
+			if (openingHours[0].isOpen) {
+				return "No info";
+			}
+
+			return openingHours[0].text[0].split(" ").pop();
+		},
+	},
 };
 </script>

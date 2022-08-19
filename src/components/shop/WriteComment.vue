@@ -83,7 +83,7 @@ export default {
 			}
 
 			const comment = makeCommentObj({
-				shop_id: "1",
+				shop_id: this.$route.params.id,
 				user: store.currentUser,
 				message: this.userComment,
 				date_sent: Date.now(),

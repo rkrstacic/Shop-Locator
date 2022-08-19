@@ -103,13 +103,14 @@
 import router from "@/router";
 import store, { getEmptySP, isAnyDefaultSP, lsKey } from "@/store";
 import ShopCard from "../components/shoplist/ShopCard.vue";
+import data from "@/sampleData";
 
 const sortEnum = {
 	distance: "distance",
 	rating: "stars",
 };
 
-function fetchShops() {
+function fetchShops2() {
 	// let preferences = store.shopPreferences;
 	return [
 		{
@@ -143,15 +144,9 @@ function fetchShops() {
 	];
 }
 
-function getDistance(rawDistance) {
-	let data = rawDistance.split(" ");
-	data[0] = parseFloat(data[0]);
-
-	if (data[1] === "km") {
-		data[0] *= 1000;
-	}
-
-	return data[0];
+function fetchShops() {
+	// let preferences = store.shopPreferences;
+	return data["items"];
 }
 
 function getSortedList(shopList, attr) {
@@ -166,7 +161,7 @@ function getSortedList(shopList, attr) {
 			sortLogic = parseInt(first) < parseInt(second);
 		}
 		if (sortKey === "distance") {
-			sortLogic = getDistance(first) > getDistance(second);
+			sortLogic = first > second;
 		}
 
 		return sortLogic ? 1 : -1;
