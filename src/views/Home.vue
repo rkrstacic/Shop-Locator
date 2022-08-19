@@ -41,6 +41,10 @@ export default {
 		},
 	},
 	beforeCreate() {
+		// Test bearer key
+		router.replace({ name: "Pricing" }).catch((error) => {});
+		return;
+
 		// Skip check if resetPreference is set to "true"
 		if (store.resetPreference) {
 			store.resetPreference = false;

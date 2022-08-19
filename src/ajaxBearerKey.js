@@ -49,6 +49,12 @@ function generateSignature() {
 }
 
 function callAjax() {
+	postData("https://account.api.here.com/oauth2/token").then((data) => {
+		console.log(data); // JSON data parsed by `data.json()` call
+	});
+
+	return;
+
 	$.ajax({
 		url: "https://account.api.here.com/oauth2/token",
 		type: "POST",
@@ -66,6 +72,25 @@ function callAjax() {
 			alert(res);
 		},
 	});
+}
+
+// Example POST method implementation:
+async function postData(url = "") {
+	const response = await fetch(url, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded",
+			Authorization: "OAuth",
+			...parameters,
+			oauth_signature: generateSignature(),
+		},
+		body: {
+			grant_type: "client_credentials",
+		},
+	});
+
+	console.log("Hello:", response.json());
+	return response.json(); // parses JSON response into native JavaScript objects
 }
 
 export default callAjax;
