@@ -28,7 +28,7 @@
 			<v-col v-if="comments.length">
 				<v-row
 					v-for="comment in comments"
-					:key="comment.comment.id"
+					:key="comment.id"
 					class="Comment"
 				>
 					<v-col>
@@ -179,7 +179,6 @@ async function fetchShopFavSnapshotAsync(shop_id) {
 export default {
 	name: "Shop",
 	data() {
-		store.currentUser = "RandomUser";
 		// Fetch a shop
 		let shop = fetchShop(this.$route.params.id);
 		return {
@@ -239,10 +238,7 @@ export default {
 			await fetchCommentsSnapshotAsync(this.shopID).then(
 				(querySnapshot) => {
 					querySnapshot.forEach((doc) => {
-						this.comments.push({
-							user: { ...randomUser },
-							comment: doc.data(),
-						});
+						this.comments.unshift(doc.data());
 					});
 				}
 			);

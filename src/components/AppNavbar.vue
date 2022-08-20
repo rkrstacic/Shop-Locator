@@ -1,13 +1,14 @@
 <template>
 	<v-toolbar class="app-navbar noselect" dark>
-		<v-toolbar-title
-			><router-link
+		<v-toolbar-title>
+			<router-link
 				@click.native="checkHome('Home')"
 				class="nav-link m-2"
 				to="/"
-				>Logo</router-link
-			></v-toolbar-title
-		>
+			>
+				Logo
+			</router-link>
+		</v-toolbar-title>
 
 		<v-spacer></v-spacer>
 

@@ -1,7 +1,15 @@
 <template>
-	<v-row class="text-left">
-		<v-col cols="3"> User </v-col>
-		<v-col cols="9" class="custom-font extension-font mt-2 mb-2">
+	<div class="text-left d-flex">
+		<div class="mr-4">
+			<v-avatar>
+				<img
+					class="acc-pfp"
+					src="@/assets/img/default_pfp.jpg"
+					alt="Default profile picture"
+				/>
+			</v-avatar>
+		</div>
+		<div class="flex-grow-1 custom-font extension-font">
 			<v-row>
 				<v-col>
 					<v-textarea
@@ -23,15 +31,14 @@
 					</v-btn>
 				</v-col>
 			</v-row>
-		</v-col>
-	</v-row>
+		</div>
+	</div>
 </template>
 
 <style>
 .extension-font {
 	font-size: 16px;
 	word-wrap: break-word;
-	border-left: 1px solid gray;
 }
 
 textarea {
@@ -60,7 +67,14 @@ textarea {
 </style>
 
 <script>
-import { db, collection, addDoc } from "@/firebase";
+import {
+	db,
+	collection,
+	addDoc,
+	getStorage,
+	getDownloadURL,
+	ref,
+} from "@/firebase";
 import store from "@/store";
 import router from "@/router";
 
@@ -68,9 +82,25 @@ function makeCommentObj({ shop_id, user, message, date_sent }) {
 	return { shop_id, user, message, date_sent };
 }
 
+function setImg(fileName) {
+	const storage = getStorage();
+	getDownloadURL(ref(storage, fileName))
+		.then((url) => {
+			const imgs = document.getElementsByClassName("acc-pfp");
+			store.userProfileURL = url;
+			Array.from(imgs).forEach((img) => {
+				img.setAttribute("src", url);
+			});
+		})
+		.catch((error) => {
+			console.log("Error", error);
+		});
+}
+
 export default {
 	name: "WriteComment",
 	data() {
+		setImg(store.currentUser);
 		return {
 			userComment: "",
 		};
