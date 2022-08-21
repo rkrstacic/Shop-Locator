@@ -6,7 +6,7 @@
 				class="nav-link m-2"
 				to="/"
 			>
-				Logo
+				Shop Locator
 			</router-link>
 		</v-toolbar-title>
 
@@ -70,6 +70,7 @@
 
 <script>
 import store from "@/store";
+import router from "@/router";
 
 export default {
 	name: "AppNavbar",

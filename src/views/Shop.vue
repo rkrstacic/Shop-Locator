@@ -1,26 +1,53 @@
 <template>
 	<div class="shop">
 		<v-row class="shop-heading custom-font">
-			<v-col cols="2" class="text-left pl-10">
-				<router-link to="/shoplist">&#60;</router-link>
+			<v-col cols="12" md="2" class="pl-10">
+				<router-link to="/shoplist">
+					<font-awesome-icon icon="fa-solid fa-caret-left" /> Back
+				</router-link>
 			</v-col>
-			<v-col cols="8">
+			<v-col cols="12" md="8">
 				<v-row>
 					<v-col class="shop-name text-center">
 						{{ shop.title }}
 					</v-col>
 				</v-row>
-				<v-row>
-					<v-col cols="6" class="text-right">
+				<v-row class="shop-info">
+					<v-col col="12" sm="4">
+						<font-awesome-icon icon="fa-solid fa-clock" />
 						{{ closingHour }}
 					</v-col>
-					<v-col cols="6" class="text-left">
+					<v-col cols="12" sm="4">
+						<font-awesome-icon icon="fa-solid fa-location-dot" />
+						{{ location }}
+					</v-col>
+					<v-col cols="12" sm="4">
+						<font-awesome-icon icon="fa-solid fa-person-running" />
 						{{ distanceToStr(shop.distance) }}
 					</v-col>
 				</v-row>
 			</v-col>
-			<v-col cols="2" @click="toggleFavAsync()" class="text-right pr-10">
-				{{ shop.stars }} {{ favID }}
+			<v-col
+				cols="12"
+				md="2"
+				@click="toggleFavAsync()"
+				class="shop-star pr-10"
+			>
+				<v-row>
+					<v-col class="d-flex justify-end mt-1">
+						<font-awesome-icon
+							v-if="favID"
+							icon="fa-solid fa-star"
+						/>
+						<font-awesome-icon
+							v-if="!favID"
+							icon="fa-regular fa-star"
+						/>
+					</v-col>
+					<v-col class="text-left">
+						{{ shop.stars }}
+					</v-col>
+				</v-row>
 			</v-col>
 		</v-row>
 
@@ -74,6 +101,14 @@
 	margin: 15px 0px;
 }
 
+.shop-info {
+	font-size: 18px;
+}
+
+.shop-star {
+	cursor: pointer;
+}
+
 @media only screen and (max-width: 1264px) {
 	.shop {
 		width: initial;
@@ -120,12 +155,6 @@ import store from "@/store";
 import router from "@/router";
 import WriteComment from "@/components/shop/WriteComment.vue";
 import data from "@/sampleData";
-
-let randomUser = {
-	id: 1,
-	name: "Slavko",
-	pfp: "url",
-};
 
 function makeFavObj({ shop_id, user }) {
 	return { shop_id, user };
@@ -181,6 +210,7 @@ export default {
 	data() {
 		// Fetch a shop
 		let shop = fetchShop(this.$route.params.id);
+		shop.stars = 0;
 		return {
 			shopID: this.$route.params.id,
 			shop,
@@ -190,7 +220,7 @@ export default {
 			favID: "",
 		};
 	},
-	mounted() {
+	created() {
 		this.fetchCommentsAsync();
 		this.fetchFavAsync();
 		this.fetchShopFavAsync();
@@ -257,7 +287,7 @@ export default {
 			await fetchShopFavSnapshotAsync(this.shopID).then(
 				(querySnapshot) => {
 					querySnapshot.forEach(() => {
-						this.shop.stars++;
+						this.shop.stars += 1;
 					});
 				}
 			);
@@ -287,7 +317,11 @@ export default {
 				return "No info";
 			}
 
-			return openingHours[0].text[0].split(" ").pop();
+			return openingHours[0].text[0].split(": ").pop();
+		},
+
+		location() {
+			return this.shop.address.label.split(", ")[1];
 		},
 	},
 };

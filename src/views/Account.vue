@@ -27,7 +27,7 @@
 							<v-col>
 								<v-text-field
 									v-model="user.email"
-									label="Username (cannot be changed)"
+									label="Email (cannot be changed)"
 									type="text"
 									readonly
 									disabled

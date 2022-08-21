@@ -110,40 +110,6 @@ const sortEnum = {
 	rating: "stars",
 };
 
-function fetchShops2() {
-	// let preferences = store.shopPreferences;
-	return [
-		{
-			id: 1,
-			name: "Shop Name 1",
-			closeTime: "10:00pm",
-			stars: 10,
-			distance: "40 m",
-		},
-		{
-			id: 2,
-			name: "Shop Name 2",
-			closeTime: "11:00pm",
-			stars: 16,
-			distance: "100 m",
-		},
-		{
-			id: 3,
-			name: "Shop Name 3",
-			closeTime: "7:00pm",
-			stars: 3,
-			distance: "1.3 km",
-		},
-		{
-			id: 4,
-			name: "Shop Name 4",
-			closeTime: "4:00pm",
-			stars: 58,
-			distance: "3 km",
-		},
-	];
-}
-
 function fetchShops() {
 	// let preferences = store.shopPreferences;
 	return data["items"];
@@ -194,6 +160,12 @@ export default {
 	},
 	data() {
 		let shopList = fetchShops();
+
+		shopList.map((shop) => {
+			shop.stars = 0;
+			return shop;
+		});
+
 		return {
 			shopList,
 			currentSort: "Distance",
