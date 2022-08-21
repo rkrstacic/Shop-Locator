@@ -107,8 +107,8 @@ export default {
 	name: "login",
 	data() {
 		return {
-			email: "test@gmail.com",
-			password: "password",
+			email: "",
+			password: "",
 		};
 	},
 

@@ -132,10 +132,10 @@ export default {
 	name: "Register",
 	data() {
 		return {
-			username: "test",
-			email: "test@gmail.com",
-			password: "password",
-			passwordRepeat: "password",
+			username: "",
+			email: "",
+			password: "",
+			passwordRepeat: "",
 		};
 	},
 	methods: {
