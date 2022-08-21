@@ -80,7 +80,6 @@ export default {
 			store,
 			links: [
 				{ route: "/", name: "Home" },
-				{ route: "/pricing", name: "Pricing" },
 				{ route: "/about", name: "About" },
 			],
 		};
