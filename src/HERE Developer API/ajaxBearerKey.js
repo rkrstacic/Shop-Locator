@@ -1,30 +1,29 @@
 const OAuth = require("oauth-1.0a");
 
-const token = {
-	key: "la4fnVQ94m2GHHRQ-dDGjA",
-	secret: "DZCczkYNdO-6Q7P5vVAjkR3OlVHYesGNe8K5VLpZrrpkaWhocSTGpOUP0abW67VOiRdELoC1l-QAmvAqwEE6dA",
-};
-
-const request_data = {
+const req_data = {
 	url: "https://account.api.here.com/oauth2/token",
 	method: "POST",
 };
 
-function hash_function_sha1(base_string, key) {
-	return CryptoJS.HmacSHA1(base_string, key).toString(CryptoJS.enc.Base64);
-}
-
 const oauth = OAuth({
-	consumer: token,
+	consumer: {
+		key: "la4fnVQ94m2GHHRQ-dDGjA",
+		secret: "DZCczkYNdO-6Q7P5vVAjkR3OlVHYesGNe8K5VLpZrrpkaWhocSTGpOUP0abW67VOiRdELoC1l-QAmvAqwEE6dA",
+	},
 	signature_method: "HMAC-SHA1",
-	hash_function: hash_function_sha1,
+	parameter_seperator: ",",
+	hash_function(base_string, key) {
+		return CryptoJS.HmacSHA1(base_string, key).toString(
+			CryptoJS.enc.Base64
+		);
+	},
 });
 
-async function postData(url = "") {
-	const response = await fetch(url, {
-		method: "POST",
+async function postData(request_data) {
+	const response = await fetch(request_data.url, {
+		method: request_data.method,
 		headers: {
-			Authorization: oauth.toHeader(oauth.authorize(request_data, token))[
+			Authorization: oauth.toHeader(oauth.authorize(request_data))[
 				"Authorization"
 			],
 			"Content-Type": "application/x-www-form-urlencoded",
@@ -38,10 +37,11 @@ async function postData(url = "") {
 }
 
 function callAjax() {
-	postData("https://account.api.here.com/oauth2/token").then((data) => {
+	postData(req_data).then((data) => {
 		console.log(data);
 	});
 
+	console.log(oauth.toHeader(oauth.authorize(req_data))["Authorization"]);
 	return;
 }
 
