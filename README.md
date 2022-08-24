@@ -82,10 +82,30 @@ Download [the code](https://github.com/rkrstacic/shop-locator) from github, exam
 
 > `git clone https://github.com/rkrstacic/shop-locator`
 
-Open the folder in an editor ([WebStorm](https://www.jetbrains.com/webstorm/), [VS Code](https://code.visualstudio.com/)) and then in the terminal run:
+Open the folder in an editor ([WebStorm](https://www.jetbrains.com/webstorm/), [VS Code](https://code.visualstudio.com/)), add `.env` file, and write the following in the file:
 
-> `npm install`
+```js
+VUE_APP_API_KEY = "<HERE Developer API Key>";
+```
 
-and then run:
+Install dependecies and start the local server using npm or yarn.
 
-> `npm run serve`
+Using [npm](https://www.npmjs.com/):
+
+```
+$ npm install
+```
+
+```
+$ npm run serve
+```
+
+Using [yarn](https://yarnpkg.com/):
+
+```
+$ yarn install
+```
+
+```
+$ yarn run serve
+```
