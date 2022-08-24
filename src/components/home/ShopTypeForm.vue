@@ -1,5 +1,5 @@
 <template>
-	<v-container class="text-center mt-10">
+	<v-container class="text-center">
 		<link
 			rel="stylesheet"
 			href="https://fonts.googleapis.com/css?family=Aclonica"
@@ -7,11 +7,7 @@
 			rel="stylesheet"
 			href="https://fonts.googleapis.com/css?family=PT%20Sans%20Caption"
 		/>
-		<v-card
-			elevation="2"
-			max-width="400"
-			class="rounded-lg mt-16 ma-auto pa-8"
-		>
+		<v-card elevation="2" max-width="400" class="rounded-lg ma-auto pa-8">
 			<v-row>
 				<v-col>
 					<v-row>
@@ -20,7 +16,7 @@
 							search</v-col
 						>
 					</v-row>
-					<v-row class="pt-5 pb-5">
+					<v-row>
 						<v-col>
 							<v-checkbox
 								v-for="shopType in Object.keys(shopTypes)"
@@ -62,6 +58,10 @@
 
 .theme--light.v-icon {
 	color: var(--quaternary-color);
+}
+
+.v-input--selection-controls {
+	margin-top: 0px !important;
 }
 </style>
 
