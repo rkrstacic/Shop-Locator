@@ -5,12 +5,7 @@
 </template>
 
 <script>
-import callAjax from "@/HERE Developer API/ajaxBearerKey";
-
 export default {
 	name: "about",
-	created() {
-		callAjax();
-	},
 };
 </script>
