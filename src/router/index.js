@@ -47,7 +47,7 @@ const routes = [
 		component: () => import("../views/ShopList.vue"),
 	},
 	{
-		path: "/shop/:id",
+		path: "/shop/id=:id&distance=:distance",
 		name: "Shop",
 		component: () => import("../views/Shop.vue"),
 	},

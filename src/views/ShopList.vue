@@ -48,7 +48,7 @@
 						No shops to display
 					</div>
 					<ShopCard
-						@click.native="toShop(shop.id)"
+						@click.native="toShop(shop.id, shop.distance)"
 						v-for="shop in shopList"
 						:key="shop.id"
 						:model="shop"
@@ -111,7 +111,6 @@
 import router from "@/router";
 import store, { getEmptySP, isAnyDefaultSP, lsKey } from "@/store";
 import ShopCard from "../components/shoplist/ShopCard.vue";
-import data from "@/sampleData";
 import requestShops from "@/HERE Developer API/requestShops";
 
 const sortEnum = {
@@ -171,9 +170,9 @@ export default {
 		};
 	},
 	methods: {
-		toShop(id) {
+		toShop(id, distance) {
 			router
-				.push({ name: "Shop", params: { id: id } })
+				.push({ name: "Shop", params: { id: id, distance: distance } })
 				.catch((error) => {});
 		},
 		sortList(by) {

@@ -23,7 +23,7 @@
 					</v-col>
 					<v-col cols="12" sm="4">
 						<font-awesome-icon icon="fa-solid fa-person-running" />
-						{{ distanceToStr(shop.distance) }}
+						{{ shopDistance }}
 					</v-col>
 				</v-row>
 			</v-col>
@@ -154,14 +154,10 @@ import {
 import store from "@/store";
 import router from "@/router";
 import WriteComment from "@/components/shop/WriteComment.vue";
-import data from "@/sampleData";
+import getShopById from "@/HERE Developer API/lookup";
 
 function makeFavObj({ shop_id, user }) {
 	return { shop_id, user };
-}
-
-function fetchShop(id) {
-	return data["items"].filter((item) => item.id == id)[0];
 }
 
 async function fetchCommentsSnapshotAsync(shopID) {
@@ -208,12 +204,15 @@ async function fetchShopFavSnapshotAsync(shop_id) {
 export default {
 	name: "Shop",
 	data() {
-		// Fetch a shop
-		let shop = fetchShop(this.$route.params.id);
-		shop.stars = 0;
 		return {
 			shopID: this.$route.params.id,
-			shop,
+			shop: {
+				title: "",
+				stars: 0,
+				address: {
+					label: "",
+				},
+			},
 			isLoggedUser: store.currentUser !== null,
 			comments: [],
 			currentUser: store.currentUser,
@@ -221,9 +220,11 @@ export default {
 		};
 	},
 	created() {
-		this.fetchCommentsAsync();
-		this.fetchFavAsync();
-		this.fetchShopFavAsync();
+		this.fetchShopAsync(this.shopID).then(() => {
+			this.fetchCommentsAsync();
+			this.fetchFavAsync();
+			this.fetchShopFavAsync();
+		});
 	},
 	methods: {
 		async toggleFavAsync() {
@@ -292,12 +293,11 @@ export default {
 				}
 			);
 		},
-		distanceToStr(integer) {
-			if (integer < 1000) {
-				return `${integer} m`;
-			}
 
-			return `${Math.round(integer / 100) / 10} km`;
+		async fetchShopAsync(id) {
+			let shop = await getShopById(id);
+			this.shop = shop;
+			this.shop.stars = 0;
 		},
 	},
 	components: { Comment, WriteComment },
@@ -322,6 +322,15 @@ export default {
 
 		location() {
 			return this.shop.address.label.split(", ")[1];
+		},
+
+		shopDistance() {
+			let integer = this.$route.params.distance;
+			if (integer < 1000) {
+				return `${integer} m`;
+			}
+
+			return `${Math.round(integer / 100) / 10} km`;
 		},
 	},
 };
