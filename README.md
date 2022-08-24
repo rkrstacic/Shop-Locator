@@ -1,12 +1,16 @@
 <h1 align="center"><b>Shop Locator</b></h1>
 
+<div align="center">
+
 [![](https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D)](https://vuejs.org/)
 [![](https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com/)
 [![](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://www.netlify.com/)
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/eaf76f95-7ac3-4892-90cb-92bd01837650/deploy-status)](https://app.netlify.com/sites/shoplocator/deploys)
+</div>
 
 Application available at: https://shoplocator.netlify.app/
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/eaf76f95-7ac3-4892-90cb-92bd01837650/deploy-status)](https://app.netlify.com/sites/shoplocator/deploys)
 
 <br />
 
