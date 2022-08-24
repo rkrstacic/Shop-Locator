@@ -79,8 +79,8 @@ export default {
 		return {
 			store,
 			links: [
-				{ route: "/", name: "Home" },
-				{ route: "/about", name: "About" },
+				// { route: "/", name: "Home" },
+				// { route: "/about", name: "About" },
 			],
 		};
 	},

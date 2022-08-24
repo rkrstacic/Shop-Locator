@@ -71,7 +71,20 @@ import store from "@/store";
 export default {
 	name: "ShopTypeForm",
 	data() {
-		const shopTypeList = ["Bakery", "Sea food", "Random"];
+		const shopTypeList = [
+			"Cafe",
+			"Supermarket",
+			"Bakery",
+			"Restaraunt",
+			"Mall",
+			"Pharmacy",
+			"Butchery",
+			"Sea food",
+			"Library",
+			"Jewelry",
+			"Clothing store",
+			"Gas station",
+		];
 
 		return {
 			shopTypes: shopTypeList.reduce((accumulator, value) => {

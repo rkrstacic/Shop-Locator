@@ -44,6 +44,9 @@
 		<v-row>
 			<v-col>
 				<div class="shopcard-container">
+					<div v-if="shopList.length === 0" id="no-shops">
+						No shops to display
+					</div>
 					<ShopCard
 						@click.native="toShop(shop.id)"
 						v-for="shop in shopList"
@@ -97,6 +100,11 @@
 .v-list {
 	background-color: var(--quaternary-color) !important;
 }
+
+#no-shops {
+	padding: 0.2em;
+	cursor: initial;
+}
 </style>
 
 <script>
@@ -104,16 +112,12 @@ import router from "@/router";
 import store, { getEmptySP, isAnyDefaultSP, lsKey } from "@/store";
 import ShopCard from "../components/shoplist/ShopCard.vue";
 import data from "@/sampleData";
+import requestShops from "@/HERE Developer API/requestShops";
 
 const sortEnum = {
 	distance: "distance",
 	rating: "stars",
 };
-
-function fetchShops() {
-	// let preferences = store.shopPreferences;
-	return data["items"];
-}
 
 function getSortedList(shopList, attr) {
 	shopList.sort((f, s) => {
@@ -156,18 +160,13 @@ export default {
 		}
 	},
 	created() {
-		this.sortList("distance");
+		this.fetchShops().then(() => {
+			this.sortList("distance");
+		});
 	},
 	data() {
-		let shopList = fetchShops();
-
-		shopList.map((shop) => {
-			shop.stars = 0;
-			return shop;
-		});
-
 		return {
-			shopList,
+			shopList: [],
 			currentSort: "Distance",
 		};
 	},
@@ -184,6 +183,30 @@ export default {
 			store.resetPreference = true;
 			store.homeStage = 2;
 			router.push({ name: "Home" }).catch((error) => {});
+		},
+
+		async fetchShops() {
+			let preferences = JSON.parse(localStorage.getItem(lsKey));
+			let shopTypes = [];
+
+			for (const [key, value] of Object.entries(preferences.shopTypes)) {
+				if (value) {
+					shopTypes.push(key);
+				}
+			}
+
+			let shops = await requestShops({
+				location: preferences.location,
+				distance: preferences.distance,
+				shopTypes: shopTypes.join(","),
+			});
+
+			shops.items.map((shop) => {
+				shop.stars = 0;
+				return shop;
+			});
+
+			this.shopList = shops.items;
 		},
 	},
 	components: { ShopCard },

@@ -59,6 +59,28 @@
 <script>
 import store from "@/store";
 
+function getRealDistance(dString) {
+	let distance = dString;
+	let mult = 1;
+
+	// Distance is in km
+	if (dString.slice(-2) === "km") {
+		distance = dString.slice(0, -2).trim();
+		mult = 1000;
+	}
+
+	// Distance is in m
+	else if (dString.slice(-1) === "m") {
+		distance = dString.slice(0, -1).trim();
+	}
+
+	if (isNaN(distance)) {
+		distance = -1;
+	}
+
+	return parseFloat(distance) * mult;
+}
+
 export default {
 	name: "IntroDistance",
 	data() {
@@ -73,6 +95,8 @@ export default {
 				alert("Distance cannot be 0");
 				return;
 			}
+
+			this.distance = getRealDistance(this.distance);
 
 			if (isNaN(this.distance)) {
 				alert("Distance must be a number");
