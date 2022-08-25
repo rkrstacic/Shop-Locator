@@ -4,6 +4,7 @@ const lsKey = "shop_preferences";
 function getEmptySP() {
 	return {
 		location: "",
+		geolocation: null,
 		shopTypes: {},
 		distance: 0,
 	};
@@ -12,8 +13,8 @@ function getEmptySP() {
 // Function to determine if the shopPreferences object has any default values
 function isAnyDefaultSP(sp) {
 	return (
-		sp.location === "" ||
-		sp.location === null ||
+		((sp.location === "" || sp.location === null) &&
+			(sp.geolocation === {} || sp.geolocation === null)) ||
 		sp.shopTypes == {} ||
 		sp.distance === 0 ||
 		sp.distance === null

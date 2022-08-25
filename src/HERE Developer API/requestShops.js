@@ -1,12 +1,19 @@
 import searchShopsAsync from "@/HERE Developer API/searchPlaces";
 import getGeocodeAsync from "@/HERE Developer API/geocoding";
 
-async function requestShops({ location, distance, shopTypes }) {
-	let pos = await getGeocodeAsync(location);
+async function requestShops({
+	location = "",
+	distance,
+	shopTypes,
+	geolocation = null,
+}) {
+	if (geolocation == null) {
+		geolocation = await getGeocodeAsync(location);
+	}
 
 	return await searchShopsAsync({
-		lat: pos.lat,
-		lng: pos.lng,
+		lat: geolocation.lat,
+		lng: geolocation.lng,
 		distance: `${distance}`,
 		shopTypes: shopTypes,
 	});

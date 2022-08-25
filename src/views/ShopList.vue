@@ -194,11 +194,18 @@ export default {
 				}
 			}
 
-			let shops = await requestShops({
-				location: preferences.location,
+			let fetchParams = {
 				distance: preferences.distance,
 				shopTypes: shopTypes.join(","),
-			});
+			};
+
+			if (preferences.geolocation !== null) {
+				fetchParams.geolocation = preferences.geolocation;
+			} else {
+				fetchParams.location = preferences.location;
+			}
+
+			let shops = await requestShops(fetchParams);
 
 			shops.items.map((shop) => {
 				shop.stars = 0;

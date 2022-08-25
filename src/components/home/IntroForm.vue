@@ -22,7 +22,16 @@
 						</v-col>
 					</v-row>
 					<v-row>
-						<v-col class="text-left"> </v-col>
+						<v-col class="text-left">
+							<div
+								@click="getCurrentLocation()"
+								class="locate-me"
+							>
+								<font-awesome-icon
+									icon="fa-solid fa-location-crosshairs"
+								/>
+							</div>
+						</v-col>
 						<v-col
 							class="custom-font next-btn text-right cursor-pointer"
 							@click="goNext()"
@@ -41,6 +50,12 @@
 	background-color: var(--tertiary-color) !important;
 	border-color: var(--tertiary-color) !important;
 	color: var(--quaternary-color) !important;
+}
+
+.locate-me {
+	cursor: pointer;
+	width: 50%;
+	font-size: 1.5em;
 }
 
 .next-btn {
@@ -104,19 +119,44 @@ export default {
 	name: "IntroForm",
 	data() {
 		return {
-			location: null,
+			location: "",
+			geolocation: null,
 		};
 	},
 	methods: {
 		goNext() {
 			// Empty location check
-			if (this.location === "" || this.location === null) {
+			if (this.location === "" && this.geolocation === null) {
 				alert("Location cannot be empty");
 				return;
 			}
 
 			store.shopPreferences.location = this.location;
+			store.shopPreferences.geolocation = this.geolocation;
 			this.$emit("startShopEvent");
+		},
+		getCurrentLocation() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(
+					this.success,
+					this.fail
+				);
+			} else {
+				alert("Sorry, your browser does not support this feature.");
+			}
+		},
+
+		success(position) {
+			this.geolocation = {
+				lng: position.coords.longitude,
+				lat: position.coords.latitude,
+			};
+
+			this.goNext();
+		},
+
+		fail() {
+			alert("Could not load the current position.");
 		},
 	},
 };

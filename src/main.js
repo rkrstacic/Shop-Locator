@@ -20,6 +20,7 @@ import {
 	faStar,
 	faLocationDot,
 	faCaretLeft,
+	faLocationCrosshairs,
 } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarReg } from "@fortawesome/free-regular-svg-icons";
 
@@ -30,7 +31,8 @@ library.add(
 	faStar,
 	faStarReg,
 	faLocationDot,
-	faCaretLeft
+	faCaretLeft,
+	faLocationCrosshairs
 );
 
 /* add font awesome icon component */
