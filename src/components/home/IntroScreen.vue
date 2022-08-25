@@ -93,6 +93,62 @@
 
 	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+
+@media only screen and (max-width: 800px) {
+	.shopfast {
+		font-size: 150px;
+		line-height: 200px;
+	}
+
+	.shop {
+		margin-left: -0.2em;
+	}
+
+	.fast {
+		margin-top: -0.3em;
+	}
+}
+
+@media only screen and (max-width: 550px) {
+	.shopfast {
+		font-size: 100px;
+		line-height: 100px;
+	}
+
+	.shop {
+		margin-left: -0.2em;
+	}
+
+	.fast {
+		margin-top: 0em;
+		margin-left: 1em;
+	}
+}
+
+@media only screen and (max-width: 380px) {
+	.shopfast {
+		font-size: 50px;
+		line-height: 50px;
+	}
+
+	.shop {
+		margin-left: -0.2em;
+	}
+
+	.fast {
+		margin-top: 0em;
+		margin-left: 1em;
+	}
+
+	.cap {
+		font-size: 20px;
+		line-height: 20px;
+	}
+
+	.start-btn {
+		font-size: 18px !important;
+	}
+}
 </style>
 
 <script>
