@@ -113,12 +113,12 @@ import { db, collection, addDoc } from "@/firebase";
 
 const auth = getAuth();
 
-function makeUserObj({ username, email, pfp_id }) {
-	return { username, email, pfp_id };
+function makeUserObj({ username, email }) {
+	return { username, email };
 }
 
-async function addUserToCollections({ username, email, pfp_id }) {
-	const userObj = makeUserObj({ username, email, pfp_id });
+async function addUserToCollections({ username, email }) {
+	const userObj = makeUserObj({ username, email });
 
 	try {
 		await addDoc(collection(db, "users"), userObj);
@@ -153,7 +153,6 @@ export default {
 			await addUserToCollections({
 				username: this.username,
 				email: this.email,
-				pfp_id: 0,
 			});
 
 			router.replace({ name: "Home" }).catch((error) => {});

@@ -212,7 +212,6 @@ export default {
 			await setDoc(doc(db, "users", this.user.id), {
 				username: this.user.username,
 				email: this.user.email,
-				pfp_id: 0,
 			});
 
 			// Save img
