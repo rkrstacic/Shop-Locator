@@ -165,11 +165,11 @@ async function fetchUserSnapshotAsync(email) {
 	return await getDocs(q);
 }
 
-function saveImg(fileName, file) {
+async function saveImgAsync(fileName, file) {
 	const storage = getStorage();
 	const storageRef = ref(storage, fileName);
 
-	uploadBytes(storageRef, file);
+	await uploadBytes(storageRef, file);
 }
 
 export default {
@@ -218,13 +218,13 @@ export default {
 			this.imgRef.generateBlob(
 				(blobData) => {
 					let imgName = store.currentUser;
-					saveImg(imgName, blobData);
+					saveImgAsync(imgName, blobData).then(() => {
+						router.go();
+					});
 				},
 				"image/jpeg",
 				0.8
 			);
-
-			router.go();
 		},
 		async signOutAsync() {
 			if (!store.currentUser) {
