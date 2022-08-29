@@ -44,9 +44,7 @@
 							icon="fa-regular fa-star"
 						/>
 					</v-col>
-					<v-col class="text-left">
-						{{ shop.stars }}
-					</v-col>
+					<v-col class="text-left"> {{ stars }} </v-col>
 				</v-row>
 			</v-col>
 		</v-row>
@@ -217,6 +215,7 @@ export default {
 			comments: [],
 			currentUser: store.currentUser,
 			favID: "",
+			stars: 0,
 		};
 	},
 	created() {
@@ -284,13 +283,12 @@ export default {
 				});
 			});
 		},
-		async fetchShopFavAsync() {
-			await fetchShopFavSnapshotAsync(this.shopID).then(
-				(querySnapshot) => {
-					querySnapshot.forEach(() => {
-						this.shop.stars += 1;
-					});
-				}
+		fetchShopFavAsync() {
+			fetchShopFavSnapshotAsync(this.shopID).then((querySnapshot) =>
+				querySnapshot.forEach(() => {
+					this.shop.stars += 1;
+					this.stars += 1;
+				})
 			);
 		},
 
